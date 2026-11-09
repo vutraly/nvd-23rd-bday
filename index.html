@@ -73,6 +73,14 @@ body[data-p=none]::before{opacity:0}
 .vip .vn{font-size:.78rem;font-weight:700;letter-spacing:1px}
 .vip .h{font-size:1.4rem;letter-spacing:5px}
 .vip .vf{display:flex;justify-content:space-between;font-size:.68rem;font-weight:700}
+/* intro */
+#intro{position:relative;overflow:hidden}
+#intro>*{position:relative;z-index:1}
+#intro>.fx{position:absolute;z-index:0}
+.badge{background:#fff;color:var(--sky);font-weight:800;padding:6px 18px;border-radius:999px;border:3px solid var(--sky);box-shadow:0 4px 0 #a9d4f7;transform:rotate(-3deg)}
+.go{font-size:1.5rem;padding:18px 44px;animation:beat 1.2s infinite}
+.fx{bottom:-50px;pointer-events:none;animation:up2 linear infinite}
+@keyframes up2{to{transform:translateY(-120vh) rotate(25deg)}}
 /* sulk */
 #sulk{background:#12141d;color:#cfd6ee;overflow:hidden}
 #sulk.active~.rainwrap,.rainwrap{display:none}
@@ -162,8 +170,9 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <!-- 2. INTRO -->
 <section class="screen" id="intro">
   <div class="big" data-m="intro">🎁</div>
-  <h1>Want your gift? First, answer a little question to prove you're worthy!</h1>
-  <button onclick="go('quiz')">Okay, ask me 🐰</button>
+  <div class="badge">🎮 Mission 1 of 1</div>
+  <h1 class="q">Want your gift? First, answer a little question to prove you're worthy!</h1>
+  <button class="go" onclick="go('quiz')">Okay, ask me 🐰</button>
 </section>
 
 <!-- 3. QUIZ -->
@@ -242,6 +251,9 @@ document.body.dataset.p='dots';
 document.querySelectorAll('[data-m]').forEach(el=>{const k=el.dataset.m,e=el.textContent;el.innerHTML=`<span>${e}</span>`;
   const L=M[k]?[M[k]]:EXT.flatMap(x=>[`images/meme-${k}.${x}`,`images/${k}.${x}`]);let i=0;
   const t=()=>{if(i>=L.length)return;const im=new Image();im.alt='';im.onload=()=>{el.firstChild.style.display='none';el.appendChild(im)};im.onerror=t;im.src=L[i++]};t();});
+const FL=['🎈','🎀','⭐','💖','🎂','🎁','🍭','✨','🧸'];
+for(let i=0;i<18;i++){const e=document.createElement('span');e.className='fx';e.textContent=FL[i%FL.length];
+  e.style.cssText=`left:${Math.random()*94}%;font-size:${22+Math.random()*26}px;animation-duration:${9+Math.random()*8}s;animation-delay:-${Math.random()*14}s`;$('#intro').appendChild(e);}
 /* 1. lock */
 let code='',wrong=0;
 const pad=$('#pad');
