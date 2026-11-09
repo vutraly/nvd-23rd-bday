@@ -53,12 +53,12 @@ body[data-p=none]::before{opacity:0}
 .bolt{position:absolute;top:80px;left:62%;font-size:7rem;opacity:0;animation:bolt 7s infinite;filter:drop-shadow(0 0 24px #ffe66b)}
 @keyframes bolt{0%,90%,100%{opacity:0}91%,93%{opacity:1}92%{opacity:.2}96%{opacity:0}}
 /* forgive card */
-.sun{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff7b0,#ffd3e6 55%,#c9e8ff);color:var(--ink);border:4px solid #fff;border-radius:28px;padding:22px 24px;max-width:440px;box-shadow:0 0 40px #ffe98a,0 10px 0 #f3b5cc;display:none;flex-direction:column;gap:12px;align-items:center}
+.sun{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff7b0,#ffd3e6 55%,#c9e8ff);color:var(--ink);border:4px solid #fff;border-radius:28px;padding:28px 26px;max-width:540px;box-shadow:0 0 40px #ffe98a,0 10px 0 #f3b5cc;display:none;flex-direction:column;gap:12px;align-items:center}
 .sun::before{content:'';position:absolute;inset:-60%;background:repeating-conic-gradient(#ffffff88 0 10deg,transparent 10deg 20deg);animation:spin 12s linear infinite}
 .sun>*{position:relative}
 .sun.show{display:flex;animation:sunpop 1s cubic-bezier(.2,1.6,.4,1)}
 .sun button{animation:beat 1s infinite}
-.hugs{font-size:3rem;animation:bob 1.6s infinite}.hugs img{width:110px;height:110px;border-radius:22px}
+.sun p{font-size:clamp(1.45rem,5.5vw,1.9rem);font-weight:800;line-height:1.3;max-width:none}.sun button{font-size:1.35rem;padding:14px 34px}.hugs img{width:110px;height:110px;border-radius:22px}
 @keyframes sunpop{from{transform:scale(0) rotate(-12deg);opacity:0}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes beat{50%{transform:scale(1.1)}}
@@ -184,7 +184,6 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
   <div class="photo" data-m="sulk"><span>😿</span></div>
   <h1>Haizz... I knew it! You actually clicked NO! 🥺💔 Fine, I'm officially sulking now.</h1>
   <div class="sun" id="sun">
-    <div class="hugs big" data-m="hug">🫂💗</div>
     <p>Please forgive this handsome man! Activating “Hug my girlfriend” mode 🫂</p>
     <button onclick="go('forgive')">Hug her 🫂</button>
   </div>
