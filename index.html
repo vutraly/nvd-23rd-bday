@@ -43,8 +43,8 @@ body[data-p=hearts]::before{background:url("data:image/svg+xml,%3Csvg xmlns='htt
 body[data-p=sd]::before{background:radial-gradient(#ffffffb0 4px,transparent 4.5px) 0 0/30px 30px,repeating-linear-gradient(-45deg,#ff8fb830 0 14px,transparent 14px 28px)}
 body[data-p=none]::before{opacity:0}
 /* storm */
-.clouds{position:absolute;top:-20px;left:-10%;width:120%;height:210px;filter:blur(2px);background:radial-gradient(80px 55px at 8% 55%,#262a38 98%,transparent),radial-gradient(110px 70px at 24% 40%,#303546 98%,transparent),radial-gradient(90px 60px at 42% 55%,#262a38 98%,transparent),radial-gradient(120px 75px at 60% 38%,#2d3242 98%,transparent),radial-gradient(90px 60px at 78% 55%,#262a38 98%,transparent),radial-gradient(110px 70px at 94% 40%,#303546 98%,transparent),linear-gradient(#232634 0 60px,transparent);animation:drift 14s ease-in-out infinite alternate}
-@keyframes drift{to{transform:translateX(5%)}}
+.clouds{position:absolute;left:0;right:0;top:0;height:230px;filter:blur(1.5px)}.cl{position:absolute;height:auto;animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(8vw)}}
 .flash{position:absolute;inset:0;background:#dbe6ff;opacity:0;animation:flash 7s infinite}
 @keyframes flash{0%,90%,100%{opacity:0}91%{opacity:.75}92%{opacity:.05}93%{opacity:.6}96%{opacity:0}}
 .bolt{position:absolute;top:80px;left:62%;font-size:7rem;opacity:0;animation:bolt 7s infinite;filter:drop-shadow(0 0 24px #ffe66b)}
@@ -55,7 +55,7 @@ body[data-p=none]::before{opacity:0}
 .sun>*{position:relative}
 .sun.show{display:flex;animation:sunpop 1s cubic-bezier(.2,1.6,.4,1)}
 .sun button{animation:beat 1s infinite}
-.hugs{font-size:3rem;animation:bob 1.6s infinite}
+.hugs{font-size:3rem;animation:bob 1.6s infinite}.hugs img{width:110px;height:110px;border-radius:22px}
 @keyframes sunpop{from{transform:scale(0) rotate(-12deg);opacity:0}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes beat{50%{transform:scale(1.1)}}
@@ -145,7 +145,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute"><clipPath id="h" clipPathUnits="objectBoundingBox"><path d="M.5,.95C.1,.65 0,.4 0,.28 0,.1 .13,0 .27,0 .37,0 .46,.06 .5,.15 .54,.06 .63,0 .73,0 .87,0 1,.1 1,.28 1,.4 .9,.65 .5,.95Z"/></clipPath></svg>
+<svg width="0" height="0" style="position:absolute"><symbol id="cl" viewBox="0 0 150 90"><g fill="currentColor"><circle cx="38" cy="56" r="26"/><circle cx="76" cy="40" r="34"/><circle cx="116" cy="55" r="27"/><rect x="34" y="55" width="86" height="30" rx="15"/></g></symbol><clipPath id="h" clipPathUnits="objectBoundingBox"><path d="M.5,.95C.1,.65 0,.4 0,.28 0,.1 .13,0 .27,0 .37,0 .46,.06 .5,.15 .54,.06 .63,0 .73,0 .87,0 1,.1 1,.28 1,.4 .9,.65 .5,.95Z"/></clipPath></svg>
 
 <!-- 1. LOCK -->
 <section class="screen active" id="lock">
@@ -178,11 +178,11 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <!-- 4. SULK -->
 <section class="screen" id="sulk">
   <div class="rainwrap" id="rain"></div>
-  <div class="rainwrap"><div class="clouds"></div><div class="flash"></div><div class="bolt">⚡</div><div class="bolt" style="left:12%;animation-delay:-3.5s">⚡</div></div>
-  <div class="photo"><span>😿</span><img src="images/sulk.jpg" alt="" onerror="this.style.display='none'"></div>
+  <div class="rainwrap"><div class="clouds"><svg class="cl" style="left:-8%;top:-40px;width:300px;color:#1d202b;animation-delay:-0s"><use href="#cl"/></svg><svg class="cl" style="left:22%;top:-55px;width:340px;color:#262a38;animation-delay:-4s"><use href="#cl"/></svg><svg class="cl" style="left:50%;top:-35px;width:320px;color:#1d202b;animation-delay:-8s"><use href="#cl"/></svg><svg class="cl" style="left:76%;top:-50px;width:330px;color:#2b3040;animation-delay:-2s"><use href="#cl"/></svg><svg class="cl" style="left:8%;top:25px;width:240px;color:#303546;animation-delay:-6s"><use href="#cl"/></svg><svg class="cl" style="left:40%;top:15px;width:260px;color:#2b3040;animation-delay:-10s"><use href="#cl"/></svg><svg class="cl" style="left:68%;top:22px;width:250px;color:#353a4c;animation-delay:-3s"><use href="#cl"/></svg></div><div class="flash"></div><div class="bolt">⚡</div><div class="bolt" style="left:12%;animation-delay:-3.5s">⚡</div></div>
+  <div class="photo" data-m="sulk"><span>😿</span></div>
   <h1>Haizz... I knew it! You actually clicked NO! 🥺💔 Fine, I'm officially sulking now.</h1>
   <div class="sun" id="sun">
-    <div class="hugs">🫂💗</div>
+    <div class="hugs big" data-m="hug">🫂💗</div>
     <p>Please forgive your handsome boy! Activating “Hug my girlfriend” mode 🫂</p>
     <button onclick="go('forgive')">Hug her 🫂</button>
   </div>
@@ -239,7 +239,7 @@ function hearts(n=40){const hs=['💗','💖','💕','💘','🩷','💙'];
 const M={lock:'',intro:'',quiz:'',forgive:''},EXT=['gif','jpg','png','webp'];
 document.body.dataset.p='dots';
 document.querySelectorAll('[data-m]').forEach(el=>{const k=el.dataset.m,e=el.textContent;el.innerHTML=`<span>${e}</span>`;
-  const L=M[k]?[M[k]]:EXT.map(x=>`images/meme-${k}.${x}`);let i=0;
+  const L=M[k]?[M[k]]:EXT.flatMap(x=>[`images/meme-${k}.${x}`,`images/${k}.${x}`]);let i=0;
   const t=()=>{if(i>=L.length)return;const im=new Image();im.alt='';im.onload=()=>{el.firstChild.style.display='none';el.appendChild(im)};im.onerror=t;im.src=L[i++]};t();});
 /* 1. lock */
 let code='',wrong=0;
@@ -293,7 +293,7 @@ const REASONS=[
 "Simply because you are you, and you are mine."];
 const MODALS=[
 ()=>`<h2>The Ultimate Cheat Code 💳</h2>
-<div class="vip"><div class="vt"><span>👑 VIP PASS</span><span>✨ LIMITED EDITION</span></div><div class="chip"></div><strong>The Ultimate Cheat Code</strong><div class="vn">5 MAGIC PASSES · UNLIMITED LOVE</div><div class="h">💗💗💗💗💗</div><div class="vf"><span>HOLDER: DUONG NGUYEN VIET</span><span>VALID FOREVER</span></div></div>
+<div class="vip"><div class="vt"><span>👑 VIP PASS</span><span>✨ LIMITED EDITION</span></div><div class="chip"></div><strong>The Ultimate Cheat Code</strong><div class="vn">5 MAGIC PASSES · UNLIMITED LOVE</div><div class="h">💗💗💗💗💗</div><div class="vf"><span>HOLDER: MY FAVORITE BOY</span><span>VALID FOREVER</span></div></div>
 <p>Congratulations! You just unlocked the most powerful item in the universe! 💳✨ This card gives you 5 Magic Passes to do absolutely whatever you want. You can use it whenever you want, and I will say ‘YES’ to it without any complaints.</p>
 <ul><li>Use it when you make me mad and want a free pass.</li><li>Use it when you want to win an argument.</li><li>Or basically... just use it for whatever idea you have in mind!</li></ul>
 <p><b>Screenshot this to redeem your power later, babi!</b></p>`,
