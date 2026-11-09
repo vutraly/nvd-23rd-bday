@@ -43,6 +43,7 @@ body[data-p=dots]::before{background:radial-gradient(#ffffffb0 4px,transparent 4
 body[data-p=stripes]::before{background:repeating-linear-gradient(45deg,#ffffff66 0 16px,transparent 16px 32px)}
 body[data-p=hearts]::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Ctext x='6' y='30' font-size='20' opacity='.55'%3E💗%3C/text%3E%3Ctext x='40' y='62' font-size='16' opacity='.55'%3E💙%3C/text%3E%3C/svg%3E")}
 body[data-p=sd]::before{background:radial-gradient(#ffffffb0 4px,transparent 4.5px) 0 0/30px 30px,repeating-linear-gradient(-45deg,#ff8fb830 0 14px,transparent 14px 28px)}
+body[data-p=diag]::before{background:repeating-linear-gradient(45deg,#ffffff80 0 26px,#ff8fb824 26px 52px)}
 body[data-p=none]::before{opacity:0}
 /* storm */
 .clouds{position:absolute;left:0;right:0;top:0;height:230px;filter:blur(1.5px)}.cl{position:absolute;height:auto;animation:drift 14s ease-in-out infinite alternate}
@@ -222,7 +223,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <script>
 const PASS='1111';
 const $=s=>document.querySelector(s);
-const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'none',letter:'dots'};
+const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'diag',letter:'dots'};
 const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');window.scrollTo(0,0);document.body.dataset.p=PAT[id]||'dots';
   if(id==='sulk')startSulk();};
 
