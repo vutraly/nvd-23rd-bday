@@ -84,15 +84,15 @@ body[data-p=none]::before{opacity:0}
 .photo{width:170px;height:170px;border-radius:24px;background:#ffffff22;display:grid;place-items:center;font-size:4rem;overflow:hidden}
 .photo img{width:100%;height:100%;object-fit:cover}
 /* boxes */
-.boxes{display:grid;grid-template-columns:repeat(2,minmax(120px,160px));gap:26px}
-@media(min-width:640px){.boxes{grid-template-columns:repeat(4,150px)}}
+.boxes{display:grid;grid-template-columns:repeat(2,min(40vw,200px));gap:30px}
+@media(min-width:640px){.boxes{grid-template-columns:repeat(4,min(21vw,250px));gap:36px}}
 .box{position:relative;width:100%;aspect-ratio:1;background:none;box-shadow:none;padding:0;animation:wobble 1.8s ease-in-out infinite}
 .box:nth-child(2){animation-delay:.3s}.box:nth-child(3){animation-delay:.6s}.box:nth-child(4){animation-delay:.9s}
 @keyframes wobble{0%,100%{transform:rotate(0)}20%{transform:rotate(-7deg)}40%{transform:rotate(6deg)}60%{transform:rotate(-4deg)}80%{transform:rotate(3deg)}}
 .bb{position:absolute;left:8%;right:8%;bottom:4%;height:62%;border-radius:12px;background:var(--c);box-shadow:inset 0 -8px 0 #0000001a}
 .lid{position:absolute;left:3%;right:3%;top:14%;height:26%;border-radius:12px;background:var(--c);filter:brightness(1.08);transition:transform .4s;transform-origin:left bottom;box-shadow:inset 0 -5px 0 #0000001a}
 .bb::after,.lid::after{content:'';position:absolute;left:44%;width:12%;top:0;bottom:0;background:#fff9}
-.box b{position:absolute;inset:0;display:grid;place-items:center;font-size:2.2rem;color:#fff;z-index:2;padding-top:18%}
+.box b{position:absolute;inset:0;display:grid;place-items:center;font-size:3rem;color:#fff;z-index:2;padding-top:18%}
 .box.open{animation:none}
 .box.open .lid{transform:translateY(-16px) rotate(-24deg)}
 .box.done{opacity:.6}
@@ -198,7 +198,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 
 <!-- 6. BLIND BOXES -->
 <section class="screen" id="boxes">
-  <h1>Pick a box! 🎀</h1>
+  <h1 class="q">Pick a box! 🎀</h1>
   <div class="boxes" id="bx"></div>
   <button id="next" onclick="toLetter()">Open the letter 💌 ➜</button>
 </section>
