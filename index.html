@@ -74,6 +74,8 @@ body[data-p=none]::before{opacity:0}
 .vip .h{font-size:1.4rem;letter-spacing:5px}
 .vip .vf{display:flex;justify-content:space-between;font-size:.68rem;font-weight:700}
 /* intro */
+.bub{font-size:clamp(1.6rem,6.2vw,2.4rem);color:#fff;text-shadow:0 3px 0 #6f8fe0;background:linear-gradient(135deg,#8fcbff,#b69cff);border:5px solid #fff;border-radius:36px;padding:26px 30px;max-width:600px;box-shadow:0 10px 0 #7aa6e8,0 16px 30px #7aa6e855;transform:rotate(-1.5deg)}
+.bub::after{content:'';position:absolute;left:48px;bottom:-30px;border:15px solid transparent;border-top:22px solid #fff}
 #intro{position:relative;overflow:hidden}
 #intro>*{position:relative;z-index:1}
 #intro>.fx{position:absolute;z-index:0}
@@ -169,9 +171,8 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 
 <!-- 2. INTRO -->
 <section class="screen" id="intro">
-  <div class="big" data-m="intro">🎁</div>
-  <div class="badge">🎮 Mission 1 of 1</div>
-  <h1 class="q">Want your gift? First, answer a little question to prove you're worthy!</h1>
+  <div class="badge">Mission 1 of 1</div>
+  <h1 class="bub">Want your gift? First, answer a little question to prove you're worthy!</h1>
   <button class="go" onclick="go('quiz')">Okay, ask me 🐰</button>
 </section>
 
