@@ -15,7 +15,7 @@ body{font-family:'Baloo 2','Quicksand','Nunito',ui-rounded,'Comic Sans MS',sans-
 @keyframes fade{from{opacity:0}to{opacity:1}}
 h1{font-size:clamp(1.6rem,6vw,2.6rem);line-height:1.15;font-weight:800;max-width:640px}
 p{font-size:1.15rem;max-width:560px;line-height:1.45}
-.big{font-size:4rem;animation:bob 2.4s ease-in-out infinite}
+.big{font-size:4rem;animation:bob 2.4s ease-in-out infinite}.big img{width:150px;height:150px;object-fit:cover;border-radius:26px;border:4px solid #fff;box-shadow:0 8px 20px #b56ea544}
 @keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
 button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:999px;padding:12px 28px;font-size:1.1rem;color:#fff;background:linear-gradient(135deg,var(--hot),var(--sky));box-shadow:0 6px 0 rgba(106,74,114,.25);transition:transform .15s}
 button:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(106,74,114,.25)}
@@ -26,8 +26,8 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .pad{display:grid;grid-template-columns:repeat(3,76px);gap:12px}
 .pad button{width:76px;height:76px;padding:0;font-size:1.7rem;background:#fff;color:var(--ink);box-shadow:0 5px 0 #f3b5cc}
 .pad .gap{visibility:hidden}
-.hint{min-height:3.2em;font-size:1rem;background:#ffffffa8;border-radius:18px;padding:8px 16px;max-width:420px}
-.hint:empty{visibility:hidden}
+.hint{font-size:1.02rem;font-weight:700;line-height:1.35;background:#fff;color:#b0457a;border:3px dashed var(--hot);border-radius:20px;padding:10px 18px;max-width:420px;box-shadow:0 6px 0 #f3b5cc;animation:pop .4s}
+.hint:empty{display:none}.hint::before{content:'💡 Hint';display:block;font-size:.8rem;color:var(--sky)}
 .shake{animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
 .row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:center;min-height:70px}
@@ -35,6 +35,41 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 #yes.run{position:fixed;transition:left .25s,top .25s;z-index:9}
 #no{background:linear-gradient(135deg,#a58fc7,#7a6aa8)}
 #demon{min-height:1.6em;font-weight:700;color:#b0457a}
+/* patterns */
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none}
+body[data-p=dots]::before{background:radial-gradient(#ffffffb0 4px,transparent 4.5px) 0 0/30px 30px,radial-gradient(#ff8fb860 3px,transparent 3.5px) 15px 15px/30px 30px}
+body[data-p=stripes]::before{background:repeating-linear-gradient(45deg,#ffffff66 0 16px,transparent 16px 32px)}
+body[data-p=hearts]::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Ctext x='6' y='30' font-size='20' opacity='.55'%3E💗%3C/text%3E%3Ctext x='40' y='62' font-size='16' opacity='.55'%3E💙%3C/text%3E%3C/svg%3E")}
+body[data-p=sd]::before{background:radial-gradient(#ffffffb0 4px,transparent 4.5px) 0 0/30px 30px,repeating-linear-gradient(-45deg,#ff8fb830 0 14px,transparent 14px 28px)}
+body[data-p=none]::before{opacity:0}
+/* storm */
+.clouds{position:absolute;top:-20px;left:-10%;width:120%;height:210px;filter:blur(2px);background:radial-gradient(80px 55px at 8% 55%,#262a38 98%,transparent),radial-gradient(110px 70px at 24% 40%,#303546 98%,transparent),radial-gradient(90px 60px at 42% 55%,#262a38 98%,transparent),radial-gradient(120px 75px at 60% 38%,#2d3242 98%,transparent),radial-gradient(90px 60px at 78% 55%,#262a38 98%,transparent),radial-gradient(110px 70px at 94% 40%,#303546 98%,transparent),linear-gradient(#232634 0 60px,transparent);animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(5%)}}
+.flash{position:absolute;inset:0;background:#dbe6ff;opacity:0;animation:flash 7s infinite}
+@keyframes flash{0%,90%,100%{opacity:0}91%{opacity:.75}92%{opacity:.05}93%{opacity:.6}96%{opacity:0}}
+.bolt{position:absolute;top:80px;left:62%;font-size:7rem;opacity:0;animation:bolt 7s infinite;filter:drop-shadow(0 0 24px #ffe66b)}
+@keyframes bolt{0%,90%,100%{opacity:0}91%,93%{opacity:1}92%{opacity:.2}96%{opacity:0}}
+/* forgive card */
+.sun{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff7b0,#ffd3e6 55%,#c9e8ff);color:var(--ink);border:4px solid #fff;border-radius:28px;padding:22px 24px;max-width:440px;box-shadow:0 0 40px #ffe98a,0 10px 0 #f3b5cc;display:none;flex-direction:column;gap:12px;align-items:center}
+.sun::before{content:'';position:absolute;inset:-60%;background:repeating-conic-gradient(#ffffff88 0 10deg,transparent 10deg 20deg);animation:spin 12s linear infinite}
+.sun>*{position:relative}
+.sun.show{display:flex;animation:sunpop 1s cubic-bezier(.2,1.6,.4,1)}
+.sun button{animation:beat 1s infinite}
+.hugs{font-size:3rem;animation:bob 1.6s infinite}
+@keyframes sunpop{from{transform:scale(0) rotate(-12deg);opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes beat{50%{transform:scale(1.1)}}
+/* vip card */
+.vip{position:relative;overflow:hidden;width:min(100%,380px);min-height:220px;margin:12px auto;padding:14px 16px;border-radius:22px;text-align:left;color:#fff;display:flex;flex-direction:column;justify-content:space-between;gap:6px;border:3px solid #fff;background:radial-gradient(#ffffff55 1.5px,transparent 2px) 0 0/16px 16px,linear-gradient(120deg,#ff8fb8,#8fcbff,#c9a6ff,#ffd98a,#ff8fb8) 0 0/100% 100%;background-size:16px 16px,300% 100%;animation:vipshine 6s linear infinite;box-shadow:0 12px 28px #b56ea566,0 0 0 4px #ffffffaa}
+@keyframes vipshine{to{background-position:0 0,300% 0}}
+.vip::after{content:'';position:absolute;top:-50%;bottom:-50%;width:40px;background:#ffffff77;transform:rotate(20deg);left:-60px;animation:glare 3.5s infinite}
+@keyframes glare{to{left:120%}}
+.vip .vt{display:flex;justify-content:space-between;font-weight:800;font-size:.85rem;text-shadow:0 1px 4px #0004}
+.vip .chip{width:46px;height:34px;border-radius:7px;background:linear-gradient(135deg,#ffe38a,#e0a93a);box-shadow:inset 0 0 0 2px #fff8}
+.vip strong{font-size:1.5rem;line-height:1.1;text-shadow:0 2px 6px #0004}
+.vip .vn{font-size:.78rem;font-weight:700;letter-spacing:1px}
+.vip .h{font-size:1.4rem;letter-spacing:5px}
+.vip .vf{display:flex;justify-content:space-between;font-size:.68rem;font-weight:700}
 /* sulk */
 #sulk{background:#12141d;color:#cfd6ee;overflow:hidden}
 #sulk.active~.rainwrap,.rainwrap{display:none}
@@ -46,8 +81,6 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 #sulk>*:not(.rainwrap){position:relative;z-index:2}
 .photo{width:170px;height:170px;border-radius:24px;background:#ffffff22;display:grid;place-items:center;font-size:4rem;overflow:hidden}
 .photo img{width:100%;height:100%;object-fit:cover}
-.sun{background:linear-gradient(135deg,#fff3a8,var(--pink));color:var(--ink);border-radius:26px;padding:18px 22px;max-width:420px;box-shadow:0 0 30px #ffe98a;display:none;flex-direction:column;gap:12px;align-items:center;animation:fade 1s}
-.sun.show{display:flex}
 /* boxes */
 .boxes{display:grid;grid-template-columns:repeat(2,minmax(120px,160px));gap:26px}
 @media(min-width:640px){.boxes{grid-template-columns:repeat(4,150px)}}
@@ -70,10 +103,7 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .modal h2{font-size:1.5rem;margin-bottom:10px}
 .modal p,.modal ul{font-size:1.02rem;max-width:none;text-align:left;margin:8px auto;max-width:560px}
 .modal ul{padding-left:22px}
-.card{width:min(100%,360px);aspect-ratio:1.6;margin:10px auto;border-radius:20px;background:linear-gradient(135deg,#ffb8d4,#b8dcff,#e8c8ff);background-size:200%;animation:shine 4s linear infinite;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 24px #b56ea555;color:#fff;border:3px solid #fff}
 @keyframes shine{50%{background-position:100% 50%}}
-.card strong{font-size:1.5rem;text-shadow:0 2px 6px #0003}
-.card .h{font-size:1.5rem;letter-spacing:4px}
 video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 #cap{min-height:3em;margin-top:8px;text-align:center!important}
 .flips{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -90,7 +120,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 .heart div{width:100%;height:100%;clip-path:url(#h);background:linear-gradient(135deg,var(--hot),var(--sky));display:grid;place-items:center;font-size:5rem}
 .heart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:url(#h)}
 .heart{position:relative}
-#next{display:none;position:fixed;right:18px;bottom:18px;z-index:20;animation:bob 1.5s infinite}
+#next{display:none;margin-top:6px;animation:bob 1.5s infinite}
 /* fx */
 .c{position:fixed;top:-20px;width:10px;height:14px;z-index:99;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
@@ -119,7 +149,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 
 <!-- 1. LOCK -->
 <section class="screen active" id="lock">
-  <div class="big">🔒</div>
+  <div class="big" data-m="lock">🔒</div>
   <h1>Enter the password</h1>
   <p>It has 4 digits 💗</p>
   <div class="dots" id="dots"><i></i><i></i><i></i><i></i></div>
@@ -129,14 +159,14 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 
 <!-- 2. INTRO -->
 <section class="screen" id="intro">
-  <div class="big">🎁</div>
+  <div class="big" data-m="intro">🎁</div>
   <h1>Want your gift? First, answer a little question to prove you're worthy!</h1>
   <button onclick="go('quiz')">Okay, ask me 🐰</button>
 </section>
 
 <!-- 3. QUIZ -->
 <section class="screen" id="quiz">
-  <div class="big">🥺</div>
+  <div class="big" data-m="quiz">🥺</div>
   <h1>Do you really, really, really love me?</h1>
   <div class="row" id="row">
     <button id="yes">Yes, with all my heart</button>
@@ -148,10 +178,11 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <!-- 4. SULK -->
 <section class="screen" id="sulk">
   <div class="rainwrap" id="rain"></div>
-  <div class="cloud">🌧️</div>
+  <div class="rainwrap"><div class="clouds"></div><div class="flash"></div><div class="bolt">⚡</div><div class="bolt" style="left:12%;animation-delay:-3.5s">⚡</div></div>
   <div class="photo"><span>😿</span><img src="images/sulk.jpg" alt="" onerror="this.style.display='none'"></div>
   <h1>Haizz... I knew it! You actually clicked NO! 🥺💔 Fine, I'm officially sulking now.</h1>
   <div class="sun" id="sun">
+    <div class="hugs">🫂💗</div>
     <p>Please forgive your handsome boy! Activating “Hug my girlfriend” mode 🫂</p>
     <button onclick="go('forgive')">Hug her 🫂</button>
   </div>
@@ -159,7 +190,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 
 <!-- 5. FORGIVE -->
 <section class="screen" id="forgive">
-  <div class="big">🥰</div>
+  <div class="big" data-m="forgive">🥰</div>
   <h1>Hmph! Fine, since you look so sorry, I'll forgive you. Your babi is not mad anymore!</h1>
   <button onclick="go('boxes')">Get my gift 🎁</button>
 </section>
@@ -168,6 +199,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <section class="screen" id="boxes">
   <h1>Pick a box! 🎀</h1>
   <div class="boxes" id="bx"></div>
+  <button id="next" onclick="toLetter()">Open the letter 💌 ➜</button>
 </section>
 
 <!-- 7. LETTER -->
@@ -184,14 +216,13 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
   </div>
 </section>
 
-<button id="next" onclick="toLetter()">Open the letter 💌 ➜</button>
-
 <div class="ov" id="ov"><div class="modal"><button class="x" onclick="closeM()" aria-label="Close">✕</button><div id="mc"></div></div></div>
 
 <script>
 const PASS='1111';
 const $=s=>document.querySelector(s);
-const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');window.scrollTo(0,0);
+const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'hearts',letter:'dots'};
+const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');window.scrollTo(0,0);document.body.dataset.p=PAT[id]||'dots';
   if(id==='sulk')startSulk();};
 
 /* effects */
@@ -204,6 +235,12 @@ function hearts(n=40){const hs=['💗','💖','💕','💘','🩷','💙'];
     e.style.cssText=`left:${Math.random()*100}vw;font-size:${18+Math.random()*30}px;animation-duration:${2.5+Math.random()*2.5}s;animation-delay:${Math.random()*.8}s`;
     document.body.appendChild(e);setTimeout(()=>e.remove(),6500);}}
 
+/* memes: put images/meme-lock|intro|quiz|forgive.(gif|jpg|png|webp), or paste a direct URL here */
+const M={lock:'',intro:'',quiz:'',forgive:''},EXT=['gif','jpg','png','webp'];
+document.body.dataset.p='dots';
+document.querySelectorAll('[data-m]').forEach(el=>{const k=el.dataset.m,e=el.textContent;el.innerHTML=`<span>${e}</span>`;
+  const L=M[k]?[M[k]]:EXT.map(x=>`images/meme-${k}.${x}`);let i=0;
+  const t=()=>{if(i>=L.length)return;const im=new Image();im.alt='';im.onload=()=>{el.firstChild.style.display='none';el.appendChild(im)};im.onerror=t;im.src=L[i++]};t();});
 /* 1. lock */
 let code='',wrong=0;
 const pad=$('#pad');
@@ -216,8 +253,7 @@ function key(k){
     if(code===PASS){setTimeout(()=>{go('intro');confetti(50)},250);return;}
     wrong++;$('#dots').classList.add('shake');
     setTimeout(()=>{$('#dots').classList.remove('shake');code='';document.querySelectorAll('#dots i').forEach(d=>d.classList.remove('on'));},400);
-    if(wrong>=4)$('#hint').textContent="The Single's Day boy who is no longer single (you are all mine now).";
-    else if(wrong>=2)$('#hint').textContent='The start of a masterpiece';
+    if(wrong>=2)$('#hint').innerHTML='🔸 The start of a masterpiece'+(wrong>=4?"<br>🔸 The Single's Day boy who is no longer single (you are all mine now).":'');
   }}
 document.addEventListener('keydown',e=>{if($('#lock').classList.contains('active')){if(/^\d$/.test(e.key))key(e.key);if(e.key==='Backspace')key('⌫');}});
 
@@ -241,7 +277,7 @@ $('#no').onclick=()=>{yes.classList.remove('run');go('sulk');};
 function startSulk(){
   const r=$('#rain');if(!r.children.length)for(let i=0;i<70;i++){const d=document.createElement('i');d.className='drop';
     d.style.cssText=`left:${Math.random()*100}%;animation-duration:${.6+Math.random()*.7}s;animation-delay:${Math.random()*-1.5}s`;r.appendChild(d);}
-  setTimeout(()=>$('#sun').classList.add('show'),5000);}
+  setTimeout(()=>{$('#sun').classList.add('show');hearts(18)},5000);}
 
 /* 6. boxes */
 const REASONS=[
@@ -257,7 +293,7 @@ const REASONS=[
 "Simply because you are you, and you are mine."];
 const MODALS=[
 ()=>`<h2>The Ultimate Cheat Code 💳</h2>
-<div class="card"><strong>The Ultimate Cheat Code</strong><div class="h">💗💗💗💗💗</div></div>
+<div class="vip"><div class="vt"><span>👑 VIP PASS</span><span>✨ LIMITED EDITION</span></div><div class="chip"></div><strong>The Ultimate Cheat Code</strong><div class="vn">5 MAGIC PASSES · UNLIMITED LOVE</div><div class="h">💗💗💗💗💗</div><div class="vf"><span>HOLDER: MY FAVORITE BOY</span><span>VALID FOREVER</span></div></div>
 <p>Congratulations! You just unlocked the most powerful item in the universe! 💳✨ This card gives you 5 Magic Passes to do absolutely whatever you want. You can use it whenever you want, and I will say ‘YES’ to it without any complaints.</p>
 <ul><li>Use it when you make me mad and want a free pass.</li><li>Use it when you want to win an argument.</li><li>Or basically... just use it for whatever idea you have in mind!</li></ul>
 <p><b>Screenshot this to redeem your power later, babi!</b></p>`,
@@ -266,7 +302,7 @@ const MODALS=[
 `<div class="fl" onclick="this.classList.add('on')"><div class="fi"><div class="fa"><span>💗</span>${i+1}</div><div class="fb"><div><b>Reason #${i+1}</b><br>${t}</div></div></div></div>`).join('')}</div>`,
 ()=>`<h2>The Grand Jackpot: ME! 🎉</h2>
 <div class="heart"><div>🐰</div><img src="images/me.jpg" alt="" onerror="this.style.display='none'"></div>
-<p>Ta-daaa! You just won the most exclusive, priceless, and limited-edition prize in the world: ME and my endless love for your whole new age! 🎂🥳💘 Thank you for coming into my world, loving me, and being the best boyfriend ever. Happy Birthday to my favorite Single's Day boy who is no longer single!</p>`];
+<p>Ta-daaa! You just won the most exclusive, priceless, and limited-edition prize in the world: ME and my endless love for your whole new age! 🎂🥳💘</p>`];
 const COL=['#ff8fb8','#7cc0f5','#c4a2f0','#ffc766'],opened=new Set();
 COL.forEach((c,i)=>{const b=document.createElement('button');b.className='box';b.style.setProperty('--c',c);
   b.innerHTML='<div class="bb"></div><div class="lid"></div><b>'+(i+1)+'</b>';b.setAttribute('aria-label','Box '+(i+1));
