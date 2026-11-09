@@ -31,6 +31,8 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .shake{animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
 .row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:center;min-height:70px}
+#yes,#no{font-size:1.4rem;padding:18px 36px;max-width:90vw}
+.q{font-size:clamp(1.9rem,8vw,3.2rem);color:#e0407f;background:#fffc;padding:22px 28px;border-radius:32px;border:4px dashed var(--hot);box-shadow:0 8px 0 #f3b5cc,0 0 0 6px #fff;text-shadow:2px 2px 0 #fff,4px 4px 0 #ffd0e3;max-width:640px}
 #yes{background:linear-gradient(135deg,#7fd8a6,var(--sky))}
 #yes.run{position:fixed;transition:left .25s,top .25s;z-index:9}
 #no{background:linear-gradient(135deg,#a58fc7,#7a6aa8)}
@@ -151,7 +153,6 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <section class="screen active" id="lock">
   <div class="big" data-m="lock">🔒</div>
   <h1>Enter the password</h1>
-  <p>It has 4 digits 💗</p>
   <div class="dots" id="dots"><i></i><i></i><i></i><i></i></div>
   <div class="pad" id="pad"></div>
   <div class="hint" id="hint"></div>
@@ -167,7 +168,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <!-- 3. QUIZ -->
 <section class="screen" id="quiz">
   <div class="big" data-m="quiz">🥺</div>
-  <h1>Do you really, really, really love me?</h1>
+  <h1 class="q">Do you really, really, really love me?</h1>
   <div class="row" id="row">
     <button id="yes">Yes, with all my heart</button>
     <button id="no">No, not at all. You are ugly monster!</button>
@@ -183,7 +184,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
   <h1>Haizz... I knew it! You actually clicked NO! 🥺💔 Fine, I'm officially sulking now.</h1>
   <div class="sun" id="sun">
     <div class="hugs big" data-m="hug">🫂💗</div>
-    <p>Please forgive your handsome boy! Activating “Hug my girlfriend” mode 🫂</p>
+    <p>Please forgive this handsome man! Activating “Hug my girlfriend” mode 🫂</p>
     <button onclick="go('forgive')">Hug her 🫂</button>
   </div>
 </section>
@@ -204,7 +205,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 
 <!-- 7. LETTER -->
 <section class="screen" id="letter">
-  <div class="env" id="env"><div class="eb"></div><div class="ef"></div><div class="eh">💌</div></div>
+  <div class="env" id="env"><div class="eb"></div><div class="ef"></div></div>
   <div class="paper" id="paper">
     <div class="photo"><span>🐰💕</span><img src="images/letter.jpg" alt="" onerror="this.style.display='none'"></div>
     <p>Dear my love,</p>
@@ -221,7 +222,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <script>
 const PASS='1111';
 const $=s=>document.querySelector(s);
-const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'hearts',letter:'dots'};
+const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'none',letter:'dots'};
 const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');window.scrollTo(0,0);document.body.dataset.p=PAT[id]||'dots';
   if(id==='sulk')startSulk();};
 
@@ -277,7 +278,7 @@ $('#no').onclick=()=>{yes.classList.remove('run');go('sulk');};
 function startSulk(){
   const r=$('#rain');if(!r.children.length)for(let i=0;i<70;i++){const d=document.createElement('i');d.className='drop';
     d.style.cssText=`left:${Math.random()*100}%;animation-duration:${.6+Math.random()*.7}s;animation-delay:${Math.random()*-1.5}s`;r.appendChild(d);}
-  setTimeout(()=>{$('#sun').classList.add('show');hearts(18)},5000);}
+  setTimeout(()=>{$('#sun').classList.add('show');hearts(18)},2500);}
 
 /* 6. boxes */
 const REASONS=[
@@ -293,7 +294,7 @@ const REASONS=[
 "Simply because you are you, and you are mine."];
 const MODALS=[
 ()=>`<h2>The Ultimate Cheat Code 💳</h2>
-<div class="vip"><div class="vt"><span>👑 VIP PASS</span><span>✨ LIMITED EDITION</span></div><div class="chip"></div><strong>The Ultimate Cheat Code</strong><div class="vn">5 MAGIC PASSES · UNLIMITED LOVE</div><div class="h">💗💗💗💗💗</div><div class="vf"><span>HOLDER: MY FAVORITE BOY</span><span>VALID FOREVER</span></div></div>
+<div class="vip"><div class="vt"><span>👑 VIP PASS</span><span>✨ LIMITED EDITION</span></div><div class="chip"></div><strong>The Ultimate Cheat Code</strong><div class="vn">5 MAGIC PASSES · UNLIMITED LOVE</div><div class="h">💗💗💗💗💗</div><div class="vf"><span>HOLDER: DUONG NGUYEN VIET</span><span>VALID FOREVER</span></div></div>
 <p>Congratulations! You just unlocked the most powerful item in the universe! 💳✨ This card gives you 5 Magic Passes to do absolutely whatever you want. You can use it whenever you want, and I will say ‘YES’ to it without any complaints.</p>
 <ul><li>Use it when you make me mad and want a free pass.</li><li>Use it when you want to win an argument.</li><li>Or basically... just use it for whatever idea you have in mind!</li></ul>
 <p><b>Screenshot this to redeem your power later, babi!</b></p>`,
