@@ -31,6 +31,8 @@ button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .shake{animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
 .row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:center;min-height:70px}
+#row{opacity:0;transform:translateY(24px);pointer-events:none;transition:opacity .9s,transform .9s}
+#row.in{opacity:1;transform:none;pointer-events:auto}
 #yes,#no{font-size:1.4rem;padding:18px 36px;max-width:90vw}
 .q{font-size:clamp(1.9rem,8vw,3.2rem);color:#e0407f;background:#fffc;padding:22px 28px;border-radius:32px;border:4px dashed var(--hot);box-shadow:0 8px 0 #f3b5cc,0 0 0 6px #fff;text-shadow:2px 2px 0 #fff,4px 4px 0 #ffd0e3;max-width:640px}
 #yes{background:linear-gradient(135deg,#7fd8a6,var(--sky))}
@@ -248,7 +250,8 @@ const PASS='1111';
 const $=s=>document.querySelector(s);
 const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'diag',letter:'dots'};
 const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');window.scrollTo(0,0);document.body.dataset.p=PAT[id]||'dots';
-  if(id==='sulk')startSulk();};
+  if(id==='sulk')startSulk();
+  if(id==='quiz'){const r=$('#row');r.classList.remove('in');setTimeout(()=>r.classList.add('in'),2800);}};
 
 /* effects */
 function confetti(n=90){if(innerWidth<640)n=Math.ceil(n*.6);const cs=['#ff8fb8','#7cc0f5','#ffe27a','#b8f0d0','#d6b8ff'];
@@ -296,7 +299,7 @@ function dodge(){
   yes.style.top=Math.max(8,Math.random()*(innerHeight-h-16))+'px';
   if(++dodges>=5)$('#demon').textContent='You have no other choice, do you 😈?';}
 document.addEventListener('pointermove',e=>{
-  if(!$('#quiz').classList.contains('active'))return;
+  if(!$('#quiz').classList.contains('active')||!$('#row').classList.contains('in'))return;
   const r=yes.getBoundingClientRect();
   if(Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2))<r.width/2+50)dodge();});
 yes.addEventListener('touchstart',e=>{e.preventDefault();dodge();},{passive:false});
