@@ -73,6 +73,14 @@ body[data-p=none]::before{opacity:0}
 .vip .vn{font-size:.78rem;font-weight:700;letter-spacing:1px}
 .vip .h{font-size:1.4rem;letter-spacing:5px}
 .vip .vf{display:flex;justify-content:space-between;font-size:.68rem;font-weight:700}
+/* lock compact */
+#lock{gap:10px;padding:14px 16px}
+#lock h1{font-size:clamp(1.4rem,5vw,2rem)}
+#lock .big{font-size:5rem}
+#lock .big img{width:min(80vw,380px);height:22vh;max-height:none;object-fit:contain}
+#lock .hint{font-size:.95rem;padding:8px 14px}
+#lock .pad{grid-template-columns:repeat(3,auto);gap:10px}
+#lock .pad button{width:clamp(54px,9vh,74px);height:clamp(54px,9vh,74px);font-size:1.5rem}
 /* intro */
 .bub{font-size:clamp(1.6rem,6.2vw,2.4rem);color:#fff;text-shadow:0 3px 0 #6f8fe0;background:linear-gradient(135deg,#8fcbff,#b69cff);border:5px solid #fff;border-radius:36px;padding:26px 30px;max-width:600px;box-shadow:0 10px 0 #7aa6e8,0 16px 30px #7aa6e855;transform:rotate(-1.5deg)}
 .bub::after{content:'';position:absolute;left:48px;bottom:-30px;border:15px solid transparent;border-top:22px solid #fff}
@@ -165,8 +173,8 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
   <div class="big" data-m="lock">🔒</div>
   <h1>Enter the password</h1>
   <div class="dots" id="dots"><i></i><i></i><i></i><i></i></div>
-  <div class="pad" id="pad"></div>
   <div class="hint" id="hint"></div>
+  <div class="pad" id="pad"></div>
 </section>
 
 <!-- 2. INTRO -->
