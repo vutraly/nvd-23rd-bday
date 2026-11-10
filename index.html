@@ -251,7 +251,7 @@ const $=s=>document.querySelector(s);
 const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'diag',letter:'dots'};
 const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');window.scrollTo(0,0);document.body.dataset.p=PAT[id]||'dots';
   if(id==='sulk')startSulk();
-  if(id==='quiz'){const r=$('#row');r.classList.remove('in');setTimeout(()=>r.classList.add('in'),2800);}};
+  if(id==='quiz'){const r=$('#row');r.classList.remove('in');setTimeout(()=>r.classList.add('in'),1500);}};
 
 /* effects */
 function confetti(n=90){if(innerWidth<640)n=Math.ceil(n*.6);const cs=['#ff8fb8','#7cc0f5','#ffe27a','#b8f0d0','#d6b8ff'];
