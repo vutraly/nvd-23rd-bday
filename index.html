@@ -237,13 +237,13 @@ const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove
   if(id==='sulk')startSulk();};
 
 /* effects */
-function confetti(n=90){const cs=['#ff8fb8','#7cc0f5','#ffe27a','#b8f0d0','#d6b8ff'];
+function confetti(n=90){if(innerWidth<640)n=Math.ceil(n*.6);const cs=['#ff8fb8','#7cc0f5','#ffe27a','#b8f0d0','#d6b8ff'];
   for(let i=0;i<n;i++){const e=document.createElement('i');e.className='c';
     e.style.cssText=`left:${Math.random()*100}vw;background:${cs[i%5]};animation-duration:${2+Math.random()*2.5}s;animation-delay:${Math.random()*.5}s;border-radius:${Math.random()>.5?'50%':'2px'}`;
     document.body.appendChild(e);setTimeout(()=>e.remove(),5500);}}
-function hearts(n=40){const hs=['💗','💖','💕','💘','🩷','💙'];
+function hearts(n=40){if(innerWidth<640)n=Math.ceil(n/2);const hs=['💗','💖','💕','💘','🩷','💙'];
   for(let i=0;i<n;i++){const e=document.createElement('span');e.className='hf';e.textContent=hs[i%6];
-    e.style.cssText=`left:${Math.random()*100}vw;font-size:${18+Math.random()*30}px;animation-duration:${2.5+Math.random()*2.5}s;animation-delay:${Math.random()*.8}s`;
+    e.style.cssText=`left:${Math.random()*100}vw;font-size:${innerWidth<640?14+Math.random()*16:18+Math.random()*30}px;animation-duration:${3.5+Math.random()*3}s;animation-delay:${Math.random()*.8}s`;
     document.body.appendChild(e);setTimeout(()=>e.remove(),6500);}}
 
 /* memes: put images/meme-lock|intro|quiz|forgive.(gif|jpg|png|webp), or paste a direct URL here */
@@ -253,8 +253,9 @@ document.querySelectorAll('[data-m]').forEach(el=>{const k=el.dataset.m,e=el.tex
   const L=M[k]?[M[k]]:EXT.flatMap(x=>[`images/meme-${k}.${x}`,`images/${k}.${x}`]);let i=0;
   const t=()=>{if(i>=L.length)return;const im=new Image();im.alt='';im.onload=()=>{el.firstChild.style.display='none';el.appendChild(im)};im.onerror=t;im.src=L[i++]};t();});
 const FL=['🎈','🎀','⭐','💖','🎂','🎁','🍭','✨','🧸'];
-for(let i=0;i<18;i++){const e=document.createElement('span');e.className='fx';e.textContent=FL[i%FL.length];
-  e.style.cssText=`left:${Math.random()*94}%;font-size:${22+Math.random()*26}px;animation-duration:${9+Math.random()*8}s;animation-delay:-${Math.random()*14}s`;$('#intro').appendChild(e);}
+const MOB=innerWidth<640;
+for(let i=0;i<(MOB?7:14);i++){const e=document.createElement('span');e.className='fx';e.textContent=FL[i%FL.length];
+  e.style.cssText=`left:${Math.random()*94}%;font-size:${MOB?16+Math.random()*12:22+Math.random()*24}px;animation-duration:${MOB?22+Math.random()*12:14+Math.random()*10}s;animation-delay:-${Math.random()*20}s`;$('#intro').appendChild(e);}
 /* 1. lock */
 let code='',wrong=0;
 const pad=$('#pad');
