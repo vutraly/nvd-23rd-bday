@@ -15,7 +15,7 @@ body{font-family:'Baloo 2','Quicksand','Nunito',ui-rounded,'Comic Sans MS',sans-
 @keyframes fade{from{opacity:0}to{opacity:1}}
 h1{font-size:clamp(1.6rem,6vw,2.6rem);line-height:1.15;font-weight:800;max-width:640px}
 p{font-size:1.15rem;max-width:560px;line-height:1.45}
-.big{font-size:4rem;animation:bob 2.4s ease-in-out infinite}.big img{width:150px;height:150px;object-fit:cover;border-radius:26px;border:4px solid #fff;box-shadow:0 8px 20px #b56ea544}
+.big{font-size:6.5rem;line-height:1.1;animation:bob 2.4s ease-in-out infinite}.big img{display:block;width:min(86vw,380px);height:auto;max-height:38vh;object-fit:contain;border-radius:22px;box-shadow:0 8px 20px #b56ea544}
 @keyframes bob{50%{transform:translateY(-10px) rotate(4deg)}}
 button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:999px;padding:12px 28px;font-size:1.1rem;color:#fff;background:linear-gradient(135deg,var(--hot),var(--sky));box-shadow:0 6px 0 rgba(106,74,114,.25);transition:transform .15s}
 button:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(106,74,114,.25)}
@@ -92,7 +92,7 @@ body[data-p=none]::before{opacity:0}
 @keyframes rain{to{transform:translateY(110vh)}}
 .cloud{font-size:5rem;filter:grayscale(1) brightness(.6)}
 #sulk>*:not(.rainwrap){position:relative;z-index:2}
-.photo{width:170px;height:170px;border-radius:24px;background:#ffffff22;display:grid;place-items:center;font-size:4rem;overflow:hidden}
+.photo{width:200px;height:200px;border-radius:24px;background:#ffffff22;display:grid;place-items:center;font-size:6.5rem;overflow:hidden}
 .photo img{width:100%;height:100%;object-fit:cover}
 /* boxes */
 .boxes{display:grid;grid-template-columns:repeat(2,min(40vw,200px));gap:30px}
@@ -130,7 +130,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 .fb{transform:rotateY(180deg);background:#fff;border:3px solid var(--hot);font-size:.8rem;line-height:1.3;overflow:auto}
 .fb b{color:var(--hot);font-size:.95rem}
 .heart{width:min(76vw,290px);aspect-ratio:1;margin:6px auto;filter:drop-shadow(0 0 10px #ff8fb8) drop-shadow(0 0 4px #fff)}
-.heart div{width:100%;height:100%;clip-path:url(#h);background:linear-gradient(135deg,var(--hot),var(--sky));display:grid;place-items:center;font-size:5rem}
+.heart div{width:100%;height:100%;clip-path:url(#h);background:linear-gradient(135deg,var(--hot),var(--sky));display:grid;place-items:center;font-size:8rem}
 .heart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:url(#h)}
 .heart{position:relative}
 #next{display:none;margin-top:6px;animation:bob 1.5s infinite}
@@ -148,10 +148,10 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 .env.open .ef{transform:rotateX(180deg);z-index:0}
 .env.open .eh{opacity:0}
 .env.gone{opacity:0;transform:translateY(40px);pointer-events:none;position:absolute}
-.paper{display:none;background:var(--cream);border-radius:22px;padding:26px 22px;width:min(94vw,640px);text-align:left;box-shadow:0 14px 40px #b56ea544;border:2px solid #fff;animation:slide 1.2s}
+.paper{display:none;background:var(--cream);border-radius:22px;padding:26px 22px;overflow:hidden;width:min(94vw,640px);text-align:left;box-shadow:0 14px 40px #b56ea544;border:2px solid #fff;animation:slide 1.2s}
 .paper.show{display:block}
 @keyframes slide{from{transform:translateY(80px) scale(.9);opacity:0}}
-.paper .photo{margin:0 auto 14px;width:100%;height:220px;background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff}
+.paper .photo{margin:-26px -22px 16px;width:calc(100% + 44px);height:min(56vw,320px);border-radius:0;background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff}
 .paper p{white-space:pre-line;font-size:1.05rem;max-width:none;margin-bottom:12px}
 .sig{font-weight:800;text-align:right}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
@@ -217,7 +217,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <section class="screen" id="letter">
   <div class="env" id="env"><div class="eb"></div><div class="ef"></div></div>
   <div class="paper" id="paper">
-    <div class="photo"><span>🐰💕</span><img src="images/letter.jpg" alt="" onerror="this.style.display='none'"></div>
+    <div class="photo"><img src="images/letter.jpg" alt="" onerror="this.style.display='none'"></div>
     <p>Dear my love,</p>
     <p>If you are reading this, it means you’ve successfully passed all my little challenges. Thank you for always being so patient with me, even when I'm being a bit playful and tease you like earlier.</p>
     <p>Today is a truly special day, not just for you, but for me too. I am so grateful to the universe for bringing you into this world, and more than that, for bringing you into my life. Thank you for your kindness, your warm hugs, and for always making me feel safe and loved. Thank you for being the best boyfriend I could ever ask for.</p>
@@ -259,9 +259,10 @@ for(let i=0;i<(MOB?7:14);i++){const e=document.createElement('span');e.className
 /* 1. lock */
 let code='',wrong=0;
 const pad=$('#pad');
-['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k=>{
-  const b=document.createElement('button');b.textContent=k;if(!k)b.className='gap';b.onclick=()=>key(k);pad.appendChild(b);});
+['1','2','3','4','5','6','7','8','9','#','0','⌫'].forEach(k=>{
+  const b=document.createElement('button');b.textContent=k;b.onclick=()=>key(k);pad.appendChild(b);});
 function key(k){
+  if(k==='#')return;
   if(k==='⌫')code=code.slice(0,-1);else if(code.length<4)code+=k;
   document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<code.length));
   if(code.length===4){
