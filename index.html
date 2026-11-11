@@ -133,8 +133,7 @@ body[data-p=none]::before{opacity:0}
 .modal p,.modal ul{font-size:1.02rem;max-width:none;text-align:left;margin:8px auto;max-width:560px}
 .modal ul{padding-left:22px}
 @keyframes shine{50%{background-position:100% 50%}}
-video{display:block;margin:0 auto;width:auto;max-width:100%;height:auto;max-height:62vh;border-radius:22px;background:transparent}
-.modal.vm{width:auto;max-width:94vw;min-width:min(94vw,360px)}
+video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 #cap{min-height:3em;margin-top:8px;text-align:center!important}
 .flips{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 @media(min-width:700px){.flips{grid-template-columns:repeat(5,1fr)}}
@@ -155,15 +154,15 @@ video{display:block;margin:0 auto;width:auto;max-width:100%;height:auto;max-heig
 #cake{overflow:hidden}
 .wish{font-size:clamp(2.2rem,9vw,3.6rem);color:#e0407f;text-shadow:3px 3px 0 #fff,5px 5px 0 #ffd0e3;animation:bob 2s ease-in-out infinite}
 .cakewrap{width:min(78vw,320px);margin-top:46px}
-.nums{display:flex;justify-content:center;gap:26px;margin-bottom:-8px;position:relative;z-index:2}
+.nums{display:flex;justify-content:center;gap:2px;margin-bottom:-8px;position:relative;z-index:2}
 .num{position:relative;font-size:6rem;line-height:.95;font-weight:800;cursor:pointer;color:transparent;background:repeating-linear-gradient(-45deg,#fff 0 9px,#9fd3ff 9px 18px);-webkit-background-clip:text;background-clip:text;-webkit-text-stroke:3px #7cc0f5}
 .flame{position:absolute;left:50%;top:-34px;width:22px;height:36px;margin-left:-11px;background:radial-gradient(ellipse at 50% 70%,#fff6a0,#ffb347 60%,#ff7a5c);border-radius:50% 50% 50% 50%/62% 62% 38% 38%;animation:flick .25s infinite alternate;box-shadow:0 0 18px 6px #ffd27a99}
 @keyframes flick{to{transform:scale(.88,1.1) rotate(-4deg)}}
 .sm{position:absolute;left:50%;top:-14px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#fff;animation:smoke 1.4s forwards}
 @keyframes smoke{to{transform:translateY(-70px) scale(3.5);opacity:0}}
 .t1,.t2{position:relative}
-.t1{width:68%;height:66px;margin:0 auto;background:radial-gradient(#fff 3px,transparent 3.5px) 0 0/22px 22px,#ffc9dd;border-radius:18px 18px 4px 4px;box-shadow:inset 0 -8px 0 #0000000f}
-.t2{width:100%;height:88px;background:radial-gradient(#fff 3px,transparent 3.5px) 8px 8px/22px 22px,#bfe2ff;border-radius:20px 20px 8px 8px;box-shadow:inset 0 -8px 0 #0000000f}
+.t1{width:68%;height:66px;margin:0 auto;background:#ffc9dd;border-radius:18px 18px 4px 4px;box-shadow:inset 0 -8px 0 #0000000f}
+.t2{width:100%;height:88px;background:#bfe2ff;border-radius:20px 20px 8px 8px;box-shadow:inset 0 -8px 0 #0000000f}
 .t1::before,.t2::before{content:'';position:absolute;left:0;right:0;top:0;height:26px;background:radial-gradient(circle at 50% 0,#fff 12px,transparent 13px) 0 0/24px 100% repeat-x}
 .plate{width:118%;height:18px;margin:-2px -9% 0;border-radius:50%;background:#fff;box-shadow:0 6px 0 #f3b5cc}
 #hb{display:none;text-align:center}
@@ -252,10 +251,10 @@ video{display:block;margin:0 auto;width:auto;max-width:100%;height:auto;max-heig
 <!-- 7. BIRTHDAY CAKE -->
 <section class="screen" id="cake">
   <h1 class="wish" id="wish">Make a wish! ✨</h1>
-  <div id="hb"><div class="hbt">Happy 23rd Birthday!</div><p>May every wish come true 💗</p></div>
+  <div id="hb"><div class="hbt">Happy 23rd Birthday!</div><p>Wishing you everything your heart desires, my babi 💗</p></div>
   <div class="cakewrap"><div class="nums"><span class="num">2<i class="flame"></i></span><span class="num">3<i class="flame"></i></span></div><div class="t1"></div><div class="t2"></div><div class="plate"></div></div>
   <p id="tip">Tap the candles to blow them out 👆</p>
-  <button id="micb" onclick="mic()">🎤 Or blow into your phone</button>
+  <button id="micb" onclick="mic()">🎤 Or blow into your mic</button>
 </section>
 
 <div class="ov" id="ov"><div class="modal"><button class="x" onclick="closeM()" aria-label="Close">✕</button><div id="mc"></div></div></div>
@@ -356,7 +355,7 @@ COL.forEach((c,i)=>{const b=document.createElement('button');b.className='box';b
   b.innerHTML='<div class="bb"></div><div class="lid"><div class="bow"><i></i><i></i><u></u></div></div><b>'+(i+1)+'</b>';b.setAttribute('aria-label','Box '+(i+1));
   b.onclick=()=>{b.classList.add('open');confetti(i===0?110:30);setTimeout(()=>openM(i,b),450);};$('#bx').appendChild(b);});
 function openM(i,b){
-  $('#mc').innerHTML=MODALS[i]();document.querySelector('.modal').classList.toggle('vm',i===1);$('#ov').classList.add('show');
+  $('#mc').innerHTML=MODALS[i]();$('#ov').classList.add('show');
   b.classList.add('done');opened.add(i);
   if(i===3){hearts(60);}
   if(i===1){const v=$('#vid');v.play().catch(()=>{});
@@ -385,9 +384,9 @@ async function mic(){
   try{stream=await navigator.mediaDevices.getUserMedia({audio:true});
     const ac=new (window.AudioContext||window.webkitAudioContext)(),an=ac.createAnalyser();an.fftSize=512;
     ac.createMediaStreamSource(stream).connect(an);const d=new Uint8Array(an.fftSize);let c=0;
-    $('#tip').textContent='Listening... now blow on your phone! 🌬️';
+    $('#tip').textContent='Listening... now blow into your mic! 🌬️';
     (function loop(){if(!lit)return;an.getByteTimeDomainData(d);let m=0;for(const v of d)m=Math.max(m,Math.abs(v-128));
-      c=m>70?c+1:Math.max(0,c-1);if(c>5){blowAll();return;}requestAnimationFrame(loop);})();
+      c=m>55?c+1:Math.max(0,c-1);if(c>5){blowAll();return;}requestAnimationFrame(loop);})();
   }catch(e){$('#tip').textContent='Mic is not available, just tap the candles! 👆';}}
 </script>
 </body>
