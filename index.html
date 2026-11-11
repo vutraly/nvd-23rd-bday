@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>For my dearest man, on Your 23rd 💝</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Quicksand:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 :root{--pink:#ffc9dd;--hot:#ff8fb8;--blue:#bfe2ff;--sky:#7cc0f5;--ink:#6a4a72;--cream:#fff8f3}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
@@ -171,18 +171,23 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 .hbt{font-size:clamp(2.4rem,10vw,4rem);font-weight:800;line-height:1.1;background:linear-gradient(90deg,#ff6fa5,#6fb5ff,#b58cff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #fff)}
 #hb p{margin:8px auto 0;font-weight:700}
 #cake{position:relative;z-index:2}
-#cake .suck{animation:suck 2.6s cubic-bezier(.55,0,.9,.4) forwards}
-@keyframes suck{70%{opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(.03) rotate(540deg);opacity:0}}
-#sky{position:fixed;inset:0;z-index:1;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:14vh;opacity:0;pointer-events:none;transition:opacity 2.2s;
+#cake .suck{animation:suck .6s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes suck{to{transform:translate(var(--dx),var(--dy)) scale(.05);opacity:0}}
+#sky{position:fixed;inset:0;z-index:1;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;opacity:0;pointer-events:none;transition:opacity .6s;
 background:radial-gradient(ellipse at 18% 28%,#5b3fa088,transparent 45%),radial-gradient(ellipse at 82% 72%,#2a6fb088,transparent 45%),radial-gradient(ellipse at 62% 18%,#c0509f55,transparent 40%),radial-gradient(ellipse at 50% 15%,#2a3680,#10143d 55%,#060820)}
 #sky.on{opacity:1}
+.lov{font-family:'Great Vibes','Dancing Script','Brush Script MT',cursive;color:#fff;font-size:clamp(3.4rem,14vw,7rem);line-height:1.15;text-align:center;letter-spacing:.03em;text-shadow:0 0 12px #fff9,0 0 30px #9fc1ffaa;padding:0 14px;transform:rotate(-3deg) scaleX(1.18)}
+#sky.write .lov{animation:flo 5s ease-in-out infinite}
+@keyframes flo{50%{transform:rotate(-3deg) scaleX(1.18) translateY(-10px)}}
+@media(min-width:800px){.lov{display:flex;gap:.28em;justify-content:center;white-space:nowrap;font-size:min(7.6vw,7rem)}.ln{margin:0}}
+.ln{position:relative;display:block;width:fit-content;margin:0 auto}
+.ln b{display:block;font-weight:400;clip-path:inset(-30% 100% -30% -8%)}
+.ln::after{content:'';position:absolute;top:55%;left:0;width:9px;height:9px;margin:-5px;border-radius:50%;background:#fff;box-shadow:0 0 14px 6px #fff,0 0 30px 12px #9fc1ff;opacity:0}
+#sky.write .ln b{animation:wipe var(--d) linear var(--dl) forwards}
+#sky.write .ln::after{animation:pen var(--d) linear var(--dl) forwards}
+@keyframes wipe{to{clip-path:inset(-30% -8% -30% -8%)}}
+@keyframes pen{0%{left:0;opacity:1}98%{opacity:1}100%{left:100%;opacity:0}}
 .mw{position:absolute;left:-25%;top:33%;width:150%;height:34%;transform:rotate(-25deg);filter:blur(22px);background:linear-gradient(transparent,#aab4ff55,#ffd2f055,#aac8ff55,transparent)}
-#bigstar{position:absolute;left:50%;top:20%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#fff;box-shadow:0 0 20px 8px #fff,0 0 60px 24px #9fc1ff,0 0 120px 50px #6d7dff66;animation:tw 1.6s ease-in-out infinite alternate}
-#bigstar::before,#bigstar::after{content:'';position:absolute;background:linear-gradient(transparent,#fff,transparent)}
-#bigstar::before{left:8px;top:-42px;width:2px;height:102px}
-#bigstar::after{top:8px;left:-42px;height:2px;width:102px;background:linear-gradient(90deg,transparent,#fff,transparent)}
-#bigstar.boom{animation:boom 1.8s ease-out forwards}
-@keyframes boom{0%{transform:scale(1)}30%{transform:scale(4.5);filter:brightness(2)}100%{transform:scale(2)}}
 .st{position:absolute;border-radius:50%;background:#fff;animation:tw 2s ease-in-out infinite alternate}
 @keyframes tw{from{opacity:.2}to{opacity:1}}
 .shoot{position:absolute;top:10%;left:70%;width:120px;height:2px;background:linear-gradient(90deg,#fff,transparent);opacity:0;animation:shoot 5s infinite}
@@ -277,7 +282,8 @@ background:radial-gradient(ellipse at 18% 28%,#5b3fa088,transparent 45%),radial-
   <button id="micb" onclick="mic()">🎤 Or blow into your mic</button>
 </section>
 
-<div id="sky"><div class="mw"></div><div id="bigstar"></div><div class="shoot"></div><div class="shoot" style="top:32%;left:92%;animation-delay:2.4s"></div><button id="again" onclick="restart()">↺ Back to the start</button></div>
+<div id="sky"><div class="mw"></div><div class="shoot"></div><div class="shoot" style="top:32%;left:92%;animation-delay:2.4s"></div><div class="lov"><span class="ln" style="--d:1.4s;--dl:0s"><b>I love you,</b></span><span class="ln" style="--d:1.9s;--dl:1.45s"><b>my babi iu</b></span></div>
+  <button id="again" onclick="restart()">↺ Back to the start</button></div>
 <button id="mute" aria-label="Sound on/off">🔊</button>
 <div class="ov" id="ov"><div class="modal"><button class="x" onclick="closeM()" aria-label="Close">✕</button><div id="mc"></div></div></div>
 
@@ -302,13 +308,30 @@ const SFX={
   pop:()=>{tone(400,0,.12,'sine',.3,900);noise(.02,.25,'highpass',2500,.25)},
   puff:()=>noise(0,.7,'bandpass',1200,.35,300),
   click:()=>tone(520,0,.07,'sine',.2,800),
-  storm:()=>{const a=A(),T=a.currentTime;
-    const lay=(type,f,v)=>{const n=Math.floor(a.sampleRate*2.4),b=a.createBuffer(1,n,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<n;i++)x[i]=Math.random()*2-1;
-      const s=a.createBufferSource();s.buffer=b;const fl=a.createBiquadFilter();fl.type=type;fl.frequency.value=f;const g=a.createGain();
-      g.gain.setValueAtTime(.0001,T);g.gain.exponentialRampToValueAtTime(v,T+.12);g.gain.setValueAtTime(v,T+1.7);g.gain.exponentialRampToValueAtTime(.0001,T+2.3);s.connect(fl).connect(g).connect(master);s.start(T);};
-    lay('highpass',1500,.3);lay('bandpass',500,.4);noise(.35,.2,'highpass',2500,.5);SFX.thunder(.7)},
-  suck:()=>{noise(0,2.2,'lowpass',3500,.3,200);tone(1200,0,2.2,'sine',.1,80)},
+  storm:()=>{const a=A(),T=a.currentTime,sr=a.sampleRate;
+    const ir=a.createBuffer(2,Math.floor(sr*1.8),sr);for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2.5)}
+    const rev=a.createConvolver();rev.buffer=ir;const wet=a.createGain();wet.gain.value=.5;rev.connect(wet).connect(master);
+    const out=a.createGain();out.connect(master);out.connect(rev);
+    const nb=brown=>{const n=Math.floor(sr*2.6),b=a.createBuffer(1,n,sr),x=b.getChannelData(0);let l=0;for(let i=0;i<n;i++){const w=Math.random()*2-1;if(brown){l=(l+.02*w)/1.02;x[i]=l*3.5}else x[i]=w}return b};
+    const L=(brown,type,f,v,t0,att,hold,rel)=>{const s=a.createBufferSource();s.buffer=nb(brown);const fl=a.createBiquadFilter();fl.type=type;fl.frequency.value=f;const g=a.createGain();
+      g.gain.setValueAtTime(.0001,T+t0);g.gain.exponentialRampToValueAtTime(v,T+t0+att);g.gain.setValueAtTime(v,T+t0+att+hold);g.gain.exponentialRampToValueAtTime(.0001,T+t0+att+hold+rel);
+      s.connect(fl).connect(g).connect(out);s.start(T+t0);s.stop(T+t0+att+hold+rel+.1)};
+    L(false,'bandpass',2600,.07,0,.35,1.5,.5);
+    L(true,'lowpass',1100,.16,0,.4,1.5,.5);
+    L(true,'lowpass',140,.35,.25,.5,.7,1.1);
+    L(false,'lowpass',500,.12,.28,.01,.05,.35);
+    for(let i=0;i<70;i++)noise(Math.random()*2.1,.03,'highpass',4000+Math.random()*3000,.015+Math.random()*.03)},
+  suck:()=>{const a=A(),T=a.currentTime,m=a.sampleRate*1,b=a.createBuffer(1,m,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<m;i++)x[i]=Math.random()*2-1;
+    const s=a.createBufferSource();s.buffer=b;const f=a.createBiquadFilter();f.type='bandpass';f.Q.value=.8;f.frequency.setValueAtTime(500,T);f.frequency.exponentialRampToValueAtTime(3000,T+.8);
+    const g=a.createGain();g.gain.setValueAtTime(.0001,T);g.gain.exponentialRampToValueAtTime(.07,T+.25);g.gain.exponentialRampToValueAtTime(.0001,T+.9);s.connect(f).connect(g).connect(master);s.start(T);
+    tone(500,0,.8,'sine',.03,1400)},
   twinkle:()=>{for(let i=0;i<8;i++)tone(2200+Math.random()*2500,i*.12,.4,'sine',.06)},
+  sparkle:()=>{const a=A(),T=a.currentTime;
+    const sw=a.createBufferSource(),n=Math.floor(a.sampleRate*3.6),b=a.createBuffer(1,n,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<n;i++)x[i]=Math.random()*2-1;
+    sw.buffer=b;const f=a.createBiquadFilter();f.type='bandpass';f.frequency.value=7500;f.Q.value=.6;const g=a.createGain();
+    g.gain.setValueAtTime(.0001,T);g.gain.exponentialRampToValueAtTime(.035,T+1.2);g.gain.exponentialRampToValueAtTime(.0001,T+3.5);sw.connect(f).connect(g).connect(master);sw.start(T);
+    for(let i=0;i<18;i++)tone(3200+Math.random()*3800,Math.random()*3,.18,'sine',.022+Math.random()*.02);
+    for(let i=0;i<30;i++)noise(Math.random()*3.2,.02,'highpass',9000,.025)},
   flip:()=>{noise(0,.14,'bandpass',1500,.3,4500);tone(280,.12,.05,'triangle',.18)},
   powerup:()=>{[659,784,1319,1047,1175,1568].forEach((f,i)=>tone(f,i*.085,.12,'square',.1));for(let i=0;i<7;i++)tone(2000+Math.random()*2500,.5+i*.07,.25,'sine',.06)},
   love:()=>{[784,659,784,1047].forEach((f,i)=>tone(f,i*.13,.22,'triangle',.22));[1319,1568,2093].forEach((f,i)=>tone(f,.55+i*.1,.5,'sine',.12));tone(900,.9,.1,'sine',.18,1500);noise(.9,.07,'bandpass',2200,.2)},
@@ -442,7 +465,7 @@ document.querySelectorAll('.num').forEach(n=>n.onclick=()=>out(n));
 function finish(){
   if(stream)stream.getTracks().forEach(t=>t.stop());
   $('#tip').style.display=$('#micb').style.display=$('#wish').style.display='none';
-  setTimeout(()=>{$('#hb').classList.add('show');confetti(160);hearts(40);sfx('hb');setTimeout(toSky,10800);},600);}
+  setTimeout(()=>{$('#hb').classList.add('show');confetti(160);hearts(40);sfx('hb');setTimeout(toSky,10900);},600);}
 async function mic(){
   $('#micb').style.display='none';
   try{stream=await navigator.mediaDevices.getUserMedia({audio:true});
@@ -464,15 +487,12 @@ function toSky(){
     for(let i=0;i<320*M;i++){const t=(Math.random()-.5)*1.5*W,p=(Math.random()+Math.random()+Math.random()-1.5)*H*.16;
       add(W/2+t*Math.cos(ang)-p*Math.sin(ang),H*.5+t*Math.sin(ang)+p*Math.cos(ang),.6+Math.random()*1.6,C[i%5],i%4===0);}
   }
-  sky.classList.add('on');sfx('twinkle');
-  setTimeout(()=>{
-    sfx('suck');
-    const st=$('#bigstar').getBoundingClientRect(),sx=st.left+st.width/2,sy=st.top+st.height/2;
-    document.querySelectorAll('#cake .cakewrap,#cake #hb').forEach(e=>{const r=e.getBoundingClientRect();
-      e.style.setProperty('--dx',(sx-r.left-r.width/2)+'px');e.style.setProperty('--dy',(sy-r.top-r.height/2)+'px');e.classList.add('suck');});
-    setTimeout(()=>{$('#cake').style.display='none';$('#bigstar').classList.add('boom');sfx('twinkle')},2600);
-    setTimeout(()=>sky.classList.add('btn'),4300);
-  },2400);}
+  sky.classList.add('on');sfx('suck');
+  const sx=W/2,sy=H*.2;
+  document.querySelectorAll('#cake .cakewrap,#cake #hb').forEach(e=>{const r=e.getBoundingClientRect();
+    e.style.setProperty('--dx',(sx-r.left-r.width/2)+'px');e.style.setProperty('--dy',(sy-r.top-r.height/2)+'px');e.classList.add('suck');});
+  setTimeout(()=>{$('#cake').style.display='none';sky.classList.add('write');sfx('sparkle')},600);
+  setTimeout(()=>sky.classList.add('btn'),600+3350+900);}
 function restart(){setTimeout(()=>location.reload(),150);}
 </script>
 </body>
