@@ -150,6 +150,25 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 .heart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:url(#h)}
 .heart{position:relative}
 #next{display:none;margin-top:6px;animation:bob 1.5s infinite}
+/* cake */
+#cake{overflow:hidden}
+.wish{font-size:clamp(2.2rem,9vw,3.6rem);color:#e0407f;text-shadow:3px 3px 0 #fff,5px 5px 0 #ffd0e3;animation:bob 2s ease-in-out infinite}
+.cakewrap{width:min(78vw,320px);margin-top:46px}
+.nums{display:flex;justify-content:center;gap:26px;margin-bottom:-8px;position:relative;z-index:2}
+.num{position:relative;font-size:6rem;line-height:.95;font-weight:800;cursor:pointer;color:transparent;background:repeating-linear-gradient(-45deg,#fff 0 9px,#9fd3ff 9px 18px);-webkit-background-clip:text;background-clip:text;-webkit-text-stroke:3px #7cc0f5}
+.fl{position:absolute;left:50%;top:-34px;width:22px;height:36px;margin-left:-11px;background:radial-gradient(ellipse at 50% 70%,#fff6a0,#ffb347 60%,#ff7a5c);border-radius:50% 50% 50% 50%/62% 62% 38% 38%;animation:flick .25s infinite alternate;box-shadow:0 0 18px 6px #ffd27a99}
+@keyframes flick{to{transform:scale(.88,1.1) rotate(-4deg)}}
+.sm{position:absolute;left:50%;top:-14px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#fff;animation:smoke 1.4s forwards}
+@keyframes smoke{to{transform:translateY(-70px) scale(3.5);opacity:0}}
+.t1,.t2{position:relative}
+.t1{width:68%;height:66px;margin:0 auto;background:radial-gradient(#fff 3px,transparent 3.5px) 0 0/22px 22px,#ffc9dd;border-radius:18px 18px 4px 4px;box-shadow:inset 0 -8px 0 #0000000f}
+.t2{width:100%;height:88px;background:radial-gradient(#fff 3px,transparent 3.5px) 8px 8px/22px 22px,#bfe2ff;border-radius:20px 20px 8px 8px;box-shadow:inset 0 -8px 0 #0000000f}
+.t1::before,.t2::before{content:'';position:absolute;left:0;right:0;top:0;height:26px;background:radial-gradient(circle at 50% 0,#fff 12px,transparent 13px) 0 0/24px 100% repeat-x}
+.plate{width:118%;height:18px;margin:-2px -9% 0;border-radius:50%;background:#fff;box-shadow:0 6px 0 #f3b5cc}
+#hb{display:none;text-align:center}
+#hb.show{display:block;animation:sunpop 1s cubic-bezier(.2,1.6,.4,1)}
+.hbt{font-size:clamp(2.4rem,10vw,4rem);font-weight:800;line-height:1.1;background:linear-gradient(90deg,#ff6fa5,#6fb5ff,#b58cff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #fff)}
+#hb p{margin:8px auto 0;font-weight:700}
 /* fx */
 .c{position:fixed;top:-20px;width:10px;height:14px;z-index:99;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
@@ -226,21 +245,16 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <section class="screen" id="boxes">
   <h1 class="q">Pick a box! 🎀</h1>
   <div class="boxes" id="bx"></div>
-  <button id="next" onclick="toLetter()">Open the letter 💌 ➜</button>
+  <button id="next" onclick="toCake()">One last surprise 🎂 ➜</button>
 </section>
 
-<!-- 7. LETTER -->
-<section class="screen" id="letter">
-  <div class="env" id="env"><div class="eb"></div><div class="ef"></div></div>
-  <div class="paper" id="paper">
-    <div class="photo"><img src="images/letter.jpg" alt="" onerror="this.style.display='none'"></div>
-    <p>Dear my love,</p>
-    <p>If you are reading this, it means you’ve successfully passed all my little challenges. Thank you for always being so patient with me, even when I'm being a bit playful and tease you like earlier.</p>
-    <p>Today is a truly special day, not just for you, but for me too. I am so grateful to the universe for bringing you into this world, and more than that, for bringing you into my life. Thank you for your kindness, your warm hugs, and for always making me feel safe and loved. Thank you for being the best boyfriend I could ever ask for.</p>
-    <p>As you step into this new chapter of your life, I wish you nothing but genuine happiness, good health, and success in everything you do. No matter where life takes you, please remember that I will always be right here, cheering you on and walking right by your side.</p>
-    <p>Happy birthday to the boy who owns my whole heart. I love you more than words can say.</p>
-    <p class="sig">With all my love,<br>Your babi Ly 💗</p>
-  </div>
+<!-- 7. BIRTHDAY CAKE -->
+<section class="screen" id="cake">
+  <h1 class="wish" id="wish">Make a wish! ✨</h1>
+  <div id="hb"><div class="hbt">Happy 23rd Birthday!</div><p>May every wish come true 💗</p></div>
+  <div class="cakewrap"><div class="nums"><span class="num">2<i class="fl"></i></span><span class="num">3<i class="fl"></i></span></div><div class="t1"></div><div class="t2"></div><div class="plate"></div></div>
+  <p id="tip">Tap the candles to blow them out 👆</p>
+  <button id="micb" onclick="mic()">🎤 Or blow into your phone</button>
 </section>
 
 <div class="ov" id="ov"><div class="modal"><button class="x" onclick="closeM()" aria-label="Close">✕</button><div id="mc"></div></div></div>
@@ -248,7 +262,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 <script>
 const PASS='1111';
 const $=s=>document.querySelector(s);
-const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'diag',letter:'dots'};
+const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'diag',cake:'dots'};
 const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');window.scrollTo(0,0);document.body.dataset.p=PAT[id]||'dots';
   if(id==='sulk')startSulk();
   if(id==='quiz'){const r=$('#row');r.classList.remove('in');setTimeout(()=>r.classList.add('in'),1500);}};
@@ -352,13 +366,28 @@ function closeM(){const v=$('#vid');if(v)v.pause();$('#ov').classList.remove('sh
   document.querySelectorAll('.box').forEach(b=>b.classList.remove('open'));}
 $('#ov').addEventListener('click',e=>{if(e.target.id==='ov')closeM();});
 
-/* 7. letter */
-function toLetter(){
+/* 7. cake */
+let lit=2,stream;
+function toCake(){
   $('#next').style.display='none';
   document.body.style.transition='opacity .6s';document.body.style.opacity=0;
-  setTimeout(()=>{go('letter');document.body.style.opacity=1;
-    setTimeout(()=>$('#env').classList.add('open'),900);
-    setTimeout(()=>{$('#env').classList.add('gone');$('#paper').classList.add('show');hearts(25);},2000);},650);}
+  setTimeout(()=>{go('cake');document.body.style.opacity=1;},650);}
+function out(n){const f=n.querySelector('.fl');if(!f)return;f.remove();n.insertAdjacentHTML('beforeend','<i class="sm"></i>');if(--lit===0)finish();}
+function blowAll(){document.querySelectorAll('.num').forEach(out);}
+document.querySelectorAll('.num').forEach(n=>n.onclick=()=>out(n));
+function finish(){
+  if(stream)stream.getTracks().forEach(t=>t.stop());
+  $('#tip').style.display=$('#micb').style.display=$('#wish').style.display='none';
+  setTimeout(()=>{$('#hb').classList.add('show');confetti(160);hearts(40);},600);}
+async function mic(){
+  $('#micb').style.display='none';
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    const ac=new (window.AudioContext||window.webkitAudioContext)(),an=ac.createAnalyser();an.fftSize=512;
+    ac.createMediaStreamSource(stream).connect(an);const d=new Uint8Array(an.fftSize);let c=0;
+    $('#tip').textContent='Listening... now blow on your phone! 🌬️';
+    (function loop(){if(!lit)return;an.getByteTimeDomainData(d);let m=0;for(const v of d)m=Math.max(m,Math.abs(v-128));
+      c=m>70?c+1:Math.max(0,c-1);if(c>5){blowAll();return;}requestAnimationFrame(loop);})();
+  }catch(e){$('#tip').textContent='Mic is not available, just tap the candles! 👆';}}
 </script>
 </body>
 </html>
