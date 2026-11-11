@@ -150,6 +150,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 .heart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:url(#h)}
 .heart{position:relative}
 #next{display:none;margin-top:6px;animation:bob 1.5s infinite}
+#mute{position:fixed;top:10px;right:10px;z-index:80;width:40px;height:40px;padding:0;font-size:1.1rem;background:#fffd;color:var(--ink);box-shadow:0 3px 0 #f3b5cc}
 /* cake */
 #cake{overflow:hidden}
 .wish{font-size:clamp(2.2rem,9vw,3.6rem);color:#e0407f;text-shadow:3px 3px 0 #fff,5px 5px 0 #ffd0e3;animation:bob 2s ease-in-out infinite}
@@ -257,14 +258,36 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
   <button id="micb" onclick="mic()">🎤 Or blow into your mic</button>
 </section>
 
+<button id="mute" aria-label="Sound on/off">🔊</button>
 <div class="ov" id="ov"><div class="modal"><button class="x" onclick="closeM()" aria-label="Close">✕</button><div id="mc"></div></div></div>
 
 <script>
 const PASS='1111';
 const $=s=>document.querySelector(s);
+/* sound (generated in the browser, no files) */
+let ac,master,muted=false;
+function A(){if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();master=ac.createGain();master.gain.value=muted?0:.7;master.connect(ac.destination);}if(ac.state==='suspended')ac.resume();return ac;}
+function tone(f,t0,d,type='sine',v=.25,f2){const a=A(),T=a.currentTime+t0,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(f,T);if(f2)o.frequency.exponentialRampToValueAtTime(f2,T+d);
+  g.gain.setValueAtTime(.0001,T);g.gain.exponentialRampToValueAtTime(v,T+.01);g.gain.exponentialRampToValueAtTime(.0001,T+d);o.connect(g).connect(master);o.start(T);o.stop(T+d+.05);}
+function noise(t0,d,type,freq,v=.3,to){const a=A(),T=a.currentTime+t0,n=Math.floor(a.sampleRate*d),b=a.createBuffer(1,n,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<n;i++)x[i]=Math.random()*2-1;
+  const s=a.createBufferSource();s.buffer=b;const f=a.createBiquadFilter();f.type=type;f.frequency.setValueAtTime(freq,T);if(to)f.frequency.exponentialRampToValueAtTime(to,T+d);
+  const g=a.createGain();g.gain.setValueAtTime(v,T);g.gain.exponentialRampToValueAtTime(.0001,T+d);s.connect(f).connect(g).connect(master);s.start(T);}
+const HB=[[392,.75],[392,.25],[440,1],[392,1],[523,1],[494,2],[392,.75],[392,.25],[440,1],[392,1],[587,1],[523,2],[392,.75],[392,.25],[784,1],[659,1],[523,1],[494,1],[440,2],[698,.75],[698,.25],[659,1],[523,1],[587,1],[523,2]];
+const SFX={
+  tap:()=>tone(660,0,.07,'sine',.18),
+  bad:()=>{tone(220,0,.18,'square',.12);tone(165,.17,.25,'square',.12)},
+  ok:()=>[784,988,1319].forEach((f,i)=>tone(f,i*.09,.25,'triangle',.22)),
+  thunder:(v=.5)=>{noise(.12,2.2,'lowpass',500,v,60);noise(.12,.5,'lowpass',900,v*.6,200)},
+  tada:()=>{[523,659,784].forEach((f,i)=>tone(f,i*.1,.25,'triangle',.22));[523,659,784,1047].forEach(f=>tone(f,.35,.7,'triangle',.14))},
+  pop:()=>{tone(400,0,.12,'sine',.3,900);noise(.02,.25,'highpass',2500,.25)},
+  puff:()=>noise(0,.7,'bandpass',1200,.35,300),
+  hb:()=>{let t=.2;HB.forEach(([f,b])=>{tone(f,t,b*.36*.95,'square',.09);t+=b*.36})}
+};
+function sfx(n,...a){if(muted)return;try{SFX[n](...a)}catch(e){}}
+$('#mute').onclick=()=>{muted=!muted;if(master)master.gain.value=muted?0:.7;$('#mute').textContent=muted?'🔇':'🔊';};
 const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'diag',cake:'dots'};
 const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');window.scrollTo(0,0);document.body.dataset.p=PAT[id]||'dots';
-  if(id==='sulk')startSulk();
+  if(id==='sulk')startSulk();if(id==='forgive')sfx('tada');
   if(id==='quiz'){const r=$('#row');r.classList.remove('in');setTimeout(()=>r.classList.add('in'),1500);}};
 
 /* effects */
@@ -294,11 +317,12 @@ const pad=$('#pad');
   const b=document.createElement('button');b.textContent=k;b.onclick=()=>key(k);pad.appendChild(b);});
 function key(k){
   if(k==='#')return;
+  sfx('tap');
   if(k==='⌫')code=code.slice(0,-1);else if(code.length<4)code+=k;
   document.querySelectorAll('#dots i').forEach((d,i)=>d.classList.toggle('on',i<code.length));
   if(code.length===4){
-    if(code===PASS){setTimeout(()=>{go('intro');confetti(50)},250);return;}
-    wrong++;$('#dots').classList.add('shake');
+    if(code===PASS){sfx('ok');setTimeout(()=>{go('intro');confetti(50)},250);return;}
+    wrong++;sfx('bad');$('#dots').classList.add('shake');
     setTimeout(()=>{$('#dots').classList.remove('shake');code='';document.querySelectorAll('#dots i').forEach(d=>d.classList.remove('on'));},400);
     if(wrong>=2)$('#hint').innerHTML='🔸 The start of a masterpiece'+(wrong>=4?"<br>🔸 The Single's Day boy who is no longer single (you are all mine now).":'');
   }}
@@ -324,7 +348,8 @@ $('#no').onclick=()=>{yes.classList.remove('run');go('sulk');};
 function startSulk(){
   const r=$('#rain');if(!r.children.length)for(let i=0;i<70;i++){const d=document.createElement('i');d.className='drop';
     d.style.cssText=`left:${Math.random()*100}%;animation-duration:${.6+Math.random()*.7}s;animation-delay:${Math.random()*-1.5}s`;r.appendChild(d);}
-  setTimeout(()=>{$('#sun').classList.add('show');hearts(18)},2500);}
+  setTimeout(()=>{$('#sun').classList.add('show');hearts(18)},2500);
+  const th=(first,v)=>{const run=()=>{if(!$('#sulk').classList.contains('active'))return;sfx('thunder',v);setTimeout(run,7000)};setTimeout(run,first)};th(6400,.5);th(2900,.3);}
 
 /* 6. boxes */
 const REASONS=[
@@ -353,7 +378,7 @@ const MODALS=[
 const COL=['#ff8fb8','#7cc0f5','#c4a2f0','#ffc766'],opened=new Set();
 COL.forEach((c,i)=>{const b=document.createElement('button');b.className='box';b.style.setProperty('--c',c);
   b.innerHTML='<div class="bb"></div><div class="lid"><div class="bow"><i></i><i></i><u></u></div></div><b>'+(i+1)+'</b>';b.setAttribute('aria-label','Box '+(i+1));
-  b.onclick=()=>{b.classList.add('open');confetti(i===0?110:30);setTimeout(()=>openM(i,b),450);};$('#bx').appendChild(b);});
+  b.onclick=()=>{sfx('pop');b.classList.add('open');confetti(i===0?110:30);setTimeout(()=>openM(i,b),450);};$('#bx').appendChild(b);});
 function openM(i,b){
   $('#mc').innerHTML=MODALS[i]();$('#ov').classList.add('show');
   b.classList.add('done');opened.add(i);
@@ -372,13 +397,13 @@ function toCake(){
   $('#next').style.display='none';
   document.body.style.transition='opacity .6s';document.body.style.opacity=0;
   setTimeout(()=>{go('cake');document.body.style.opacity=1;},650);}
-function out(n){const f=n.querySelector('.flame');if(!f)return;f.remove();n.insertAdjacentHTML('beforeend','<i class="sm"></i>');if(--lit===0)finish();}
+function out(n){const f=n.querySelector('.flame');if(!f)return;f.remove();sfx('puff');n.insertAdjacentHTML('beforeend','<i class="sm"></i>');if(--lit===0)finish();}
 function blowAll(){document.querySelectorAll('.num').forEach(out);}
 document.querySelectorAll('.num').forEach(n=>n.onclick=()=>out(n));
 function finish(){
   if(stream)stream.getTracks().forEach(t=>t.stop());
   $('#tip').style.display=$('#micb').style.display=$('#wish').style.display='none';
-  setTimeout(()=>{$('#hb').classList.add('show');confetti(160);hearts(40);},600);}
+  setTimeout(()=>{$('#hb').classList.add('show');confetti(160);hearts(40);sfx('hb');},600);}
 async function mic(){
   $('#micb').style.display='none';
   try{stream=await navigator.mediaDevices.getUserMedia({audio:true});
