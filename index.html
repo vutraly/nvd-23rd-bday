@@ -281,13 +281,25 @@ const SFX={
   tada:()=>{[523,659,784].forEach((f,i)=>tone(f,i*.1,.25,'triangle',.22));[523,659,784,1047].forEach(f=>tone(f,.35,.7,'triangle',.14))},
   pop:()=>{tone(400,0,.12,'sine',.3,900);noise(.02,.25,'highpass',2500,.25)},
   puff:()=>noise(0,.7,'bandpass',1200,.35,300),
+  click:()=>tone(520,0,.07,'sine',.2,800),
+  flip:()=>{noise(0,.14,'bandpass',1500,.3,4500);tone(280,.12,.05,'triangle',.18)},
+  powerup:()=>{[659,784,1319,1047,1175,1568].forEach((f,i)=>tone(f,i*.085,.12,'square',.1));for(let i=0;i<7;i++)tone(2000+Math.random()*2500,.5+i*.07,.25,'sine',.06)},
+  love:()=>{[784,659,784,1047].forEach((f,i)=>tone(f,i*.13,.22,'triangle',.22));[1319,1568,2093].forEach((f,i)=>tone(f,.55+i*.1,.5,'sine',.12));tone(900,.9,.1,'sine',.18,1500);noise(.9,.07,'bandpass',2200,.2)},
   hb:()=>{let t=.2;HB.forEach(([f,b])=>{tone(f,t,b*.36*.95,'square',.09);t+=b*.36})}
 };
 function sfx(n,...a){if(muted)return;try{SFX[n](...a)}catch(e){}}
-$('#mute').onclick=()=>{muted=!muted;if(master)master.gain.value=muted?0:.7;$('#mute').textContent=muted?'🔇':'🔊';};
+$('#mute').onclick=()=>{muted=!muted;if(rainA)rainA.muted=muted;if(master)master.gain.value=muted?0:.7;$('#mute').textContent=muted?'🔇':'🔊';};
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(b&&!b.closest('#pad')&&b.id!=='mute')sfx('click')});
+let rainA;
+function playRain(){
+  const a=new Audio('audio/rain.mp3');rainA=a;a.muted=muted;let fell=false;
+  const fb=()=>{if(!fell){fell=true;sfx('thunder',.5)}};
+  a.addEventListener('error',fb);a.play().catch(fb);
+  setTimeout(()=>{const iv=setInterval(()=>{a.volume=Math.max(0,a.volume-.18);if(a.volume<=0){clearInterval(iv);a.pause()}},60)},1800);}
+function flipCard(el){if(el.classList.contains('on'))return;el.classList.add('on');sfx('flip');}
 const PAT={lock:'dots',intro:'stripes',quiz:'hearts',sulk:'none',forgive:'sd',boxes:'diag',cake:'dots'};
 const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');window.scrollTo(0,0);document.body.dataset.p=PAT[id]||'dots';
-  if(id==='sulk')startSulk();if(id==='forgive')sfx('tada');
+  if(id==='sulk')startSulk();if(id==='forgive')sfx('love');
   if(id==='quiz'){const r=$('#row');r.classList.remove('in');setTimeout(()=>r.classList.add('in'),1500);}};
 
 /* effects */
@@ -348,8 +360,8 @@ $('#no').onclick=()=>{yes.classList.remove('run');go('sulk');};
 function startSulk(){
   const r=$('#rain');if(!r.children.length)for(let i=0;i<70;i++){const d=document.createElement('i');d.className='drop';
     d.style.cssText=`left:${Math.random()*100}%;animation-duration:${.6+Math.random()*.7}s;animation-delay:${Math.random()*-1.5}s`;r.appendChild(d);}
-  setTimeout(()=>{$('#sun').classList.add('show');hearts(18)},2500);
-  const th=(first,v)=>{const run=()=>{if(!$('#sulk').classList.contains('active'))return;sfx('thunder',v);setTimeout(run,7000)};setTimeout(run,first)};th(6400,.5);th(2900,.3);}
+  setTimeout(()=>{$('#sun').classList.add('show');hearts(18);sfx('powerup')},2500);
+  playRain();}
 
 /* 6. boxes */
 const REASONS=[
@@ -371,18 +383,18 @@ const MODALS=[
 <p><b>Screenshot this to redeem your power later, babi!</b></p>`,
 ()=>`<h2>The Birthday Show 🎬</h2><video id="vid" src="video/birthday.mp4" controls playsinline></video><p id="cap"></p>`,
 ()=>`<h2>10 Reasons Why I Love You 💌</h2><div class="flips">${REASONS.map((t,i)=>
-`<div class="fl" onclick="this.classList.add('on')"><div class="fi"><div class="fa"><span>💗</span>${i+1}</div><div class="fb"><div><b>Reason #${i+1}</b><br>${t}</div></div></div></div>`).join('')}</div>`,
+`<div class="fl" onclick="flipCard(this)"><div class="fi"><div class="fa"><span>💗</span>${i+1}</div><div class="fb"><div><b>Reason #${i+1}</b><br>${t}</div></div></div></div>`).join('')}</div>`,
 ()=>`<h2>The Grand Jackpot: ME! 🎉</h2>
 <div class="heart"><div>🐰</div><img src="images/me.jpg" alt="" onerror="this.style.display='none'"></div>
 <p>Ta-daaa! You just won the most exclusive, priceless, and limited-edition prize in the world: ME and my endless love for your whole new age! 🎂🥳💘</p>`];
 const COL=['#ff8fb8','#7cc0f5','#c4a2f0','#ffc766'],opened=new Set();
 COL.forEach((c,i)=>{const b=document.createElement('button');b.className='box';b.style.setProperty('--c',c);
   b.innerHTML='<div class="bb"></div><div class="lid"><div class="bow"><i></i><i></i><u></u></div></div><b>'+(i+1)+'</b>';b.setAttribute('aria-label','Box '+(i+1));
-  b.onclick=()=>{sfx('pop');b.classList.add('open');confetti(i===0?110:30);setTimeout(()=>openM(i,b),450);};$('#bx').appendChild(b);});
+  b.onclick=()=>{b.classList.add('open');confetti(i===0?110:30);setTimeout(()=>openM(i,b),450);};$('#bx').appendChild(b);});
 function openM(i,b){
   $('#mc').innerHTML=MODALS[i]();$('#ov').classList.add('show');
   b.classList.add('done');opened.add(i);
-  if(i===3){hearts(60);}
+  if(i===3){hearts(60);sfx('tada');}
   if(i===1){const v=$('#vid');v.play().catch(()=>{});
     const t="Please don't cry because you are touched while watching this video";let k=0;
     const iv=setInterval(()=>{$('#cap').textContent=t.slice(0,++k);if(k>=t.length)clearInterval(iv);},60);}
