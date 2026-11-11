@@ -133,7 +133,8 @@ body[data-p=none]::before{opacity:0}
 .modal p,.modal ul{font-size:1.02rem;max-width:none;text-align:left;margin:8px auto;max-width:560px}
 .modal ul{padding-left:22px}
 @keyframes shine{50%{background-position:100% 50%}}
-video{width:100%;border-radius:22px;background:#000;max-height:60vh}
+video{display:block;margin:0 auto;width:auto;max-width:100%;height:auto;max-height:62vh;border-radius:22px;background:transparent}
+.modal.vm{width:auto;max-width:94vw;min-width:min(94vw,360px)}
 #cap{min-height:3em;margin-top:8px;text-align:center!important}
 .flips{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 @media(min-width:700px){.flips{grid-template-columns:repeat(5,1fr)}}
@@ -355,7 +356,7 @@ COL.forEach((c,i)=>{const b=document.createElement('button');b.className='box';b
   b.innerHTML='<div class="bb"></div><div class="lid"><div class="bow"><i></i><i></i><u></u></div></div><b>'+(i+1)+'</b>';b.setAttribute('aria-label','Box '+(i+1));
   b.onclick=()=>{b.classList.add('open');confetti(i===0?110:30);setTimeout(()=>openM(i,b),450);};$('#bx').appendChild(b);});
 function openM(i,b){
-  $('#mc').innerHTML=MODALS[i]();$('#ov').classList.add('show');
+  $('#mc').innerHTML=MODALS[i]();document.querySelector('.modal').classList.toggle('vm',i===1);$('#ov').classList.add('show');
   b.classList.add('done');opened.add(i);
   if(i===3){hearts(60);}
   if(i===1){const v=$('#vid');v.play().catch(()=>{});
