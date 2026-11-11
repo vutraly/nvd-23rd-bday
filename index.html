@@ -170,6 +170,16 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
 #hb.show{display:block;animation:sunpop 1s cubic-bezier(.2,1.6,.4,1)}
 .hbt{font-size:clamp(2.4rem,10vw,4rem);font-weight:800;line-height:1.1;background:linear-gradient(90deg,#ff6fa5,#6fb5ff,#b58cff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #fff)}
 #hb p{margin:8px auto 0;font-weight:700}
+#cake .suck{animation:suck 2.4s cubic-bezier(.55,0,.9,.4) forwards}
+@keyframes suck{to{transform:translateY(-60vh) scale(.02) rotate(720deg);opacity:0}}
+#sky{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:14vh;background:radial-gradient(ellipse at 50% 15%,#34439b,#141945 55%,#070a1f);opacity:0;pointer-events:none;transition:opacity 2s}
+#sky.on{opacity:1}
+.st{position:absolute;border-radius:50%;background:#fff;animation:tw 2s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.2}to{opacity:1}}
+.shoot{position:absolute;top:10%;left:70%;width:120px;height:2px;background:linear-gradient(90deg,#fff,transparent);opacity:0;animation:shoot 5s infinite}
+@keyframes shoot{0%,70%{opacity:0;transform:translate(0,0) rotate(-30deg)}75%{opacity:1}100%{opacity:0;transform:translate(-45vw,28vh) rotate(-30deg)}}
+#again{opacity:0;transform:translateY(20px);transition:opacity 1s,transform 1s;pointer-events:none;font-size:1.3rem;padding:16px 38px}
+#sky.btn #again{opacity:1;transform:none;pointer-events:auto}
 /* fx */
 .c{position:fixed;top:-20px;width:10px;height:14px;z-index:99;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
@@ -258,6 +268,7 @@ video{width:100%;border-radius:22px;background:#000;max-height:60vh}
   <button id="micb" onclick="mic()">🎤 Or blow into your mic</button>
 </section>
 
+<div id="sky"><div class="shoot"></div><div class="shoot" style="top:32%;left:92%;animation-delay:2.4s"></div><button id="again" onclick="restart()">↺ Back to the start</button></div>
 <button id="mute" aria-label="Sound on/off">🔊</button>
 <div class="ov" id="ov"><div class="modal"><button class="x" onclick="closeM()" aria-label="Close">✕</button><div id="mc"></div></div></div>
 
@@ -282,6 +293,8 @@ const SFX={
   pop:()=>{tone(400,0,.12,'sine',.3,900);noise(.02,.25,'highpass',2500,.25)},
   puff:()=>noise(0,.7,'bandpass',1200,.35,300),
   click:()=>tone(520,0,.07,'sine',.2,800),
+  suck:()=>{noise(0,2.2,'lowpass',3500,.3,200);tone(1200,0,2.2,'sine',.1,80)},
+  twinkle:()=>{for(let i=0;i<8;i++)tone(2200+Math.random()*2500,i*.12,.4,'sine',.06)},
   flip:()=>{noise(0,.14,'bandpass',1500,.3,4500);tone(280,.12,.05,'triangle',.18)},
   powerup:()=>{[659,784,1319,1047,1175,1568].forEach((f,i)=>tone(f,i*.085,.12,'square',.1));for(let i=0;i<7;i++)tone(2000+Math.random()*2500,.5+i*.07,.25,'sine',.06)},
   love:()=>{[784,659,784,1047].forEach((f,i)=>tone(f,i*.13,.22,'triangle',.22));[1319,1568,2093].forEach((f,i)=>tone(f,.55+i*.1,.5,'sine',.12));tone(900,.9,.1,'sine',.18,1500);noise(.9,.07,'bandpass',2200,.2)},
@@ -415,7 +428,7 @@ document.querySelectorAll('.num').forEach(n=>n.onclick=()=>out(n));
 function finish(){
   if(stream)stream.getTracks().forEach(t=>t.stop());
   $('#tip').style.display=$('#micb').style.display=$('#wish').style.display='none';
-  setTimeout(()=>{$('#hb').classList.add('show');confetti(160);hearts(40);sfx('hb');},600);}
+  setTimeout(()=>{$('#hb').classList.add('show');confetti(160);hearts(40);sfx('hb');setTimeout(toSky,10800);},600);}
 async function mic(){
   $('#micb').style.display='none';
   try{stream=await navigator.mediaDevices.getUserMedia({audio:true});
@@ -425,6 +438,16 @@ async function mic(){
     (function loop(){if(!lit)return;an.getByteTimeDomainData(d);let m=0;for(const v of d)m=Math.max(m,Math.abs(v-128));
       c=m>55?c+1:Math.max(0,c-1);if(c>5){blowAll();return;}requestAnimationFrame(loop);})();
   }catch(e){$('#tip').textContent='Mic is not available, just tap the candles! 👆';}}
+/* 8. everything gets sucked into a starry sky, then restart */
+function toSky(){
+  sfx('suck');
+  document.querySelectorAll('#cake .cakewrap,#cake #hb').forEach(e=>e.classList.add('suck'));
+  const sky=$('#sky');
+  if(!sky.querySelector('.st'))for(let i=0;i<110;i++){const d=document.createElement('i');d.className='st';const z=1+Math.random()*2.4;
+    d.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${z}px;height:${z}px;animation-duration:${1.2+Math.random()*2.5}s;animation-delay:-${Math.random()*3}s`;sky.appendChild(d);}
+  setTimeout(()=>{sky.classList.add('on');sfx('twinkle')},700);
+  setTimeout(()=>sky.classList.add('btn'),3800);}
+function restart(){setTimeout(()=>location.reload(),150);}
 </script>
 </body>
 </html>
